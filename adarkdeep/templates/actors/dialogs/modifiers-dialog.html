@@ -1,0 +1,68 @@
+<form autocomplete="off">
+  <div class="attribute-bonuses">
+    <label>{{localize 'ADARKDEEP.scores.str.long'}}</label>
+    <ol>
+      <li>
+        {{localize 'ADARKDEEP.Melee'}} ({{mod data.scores.str.mod}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.exploration.od.long'}} ({{data.exploration.odMod}} in 6)
+      </li>
+    </ol>
+  </div>
+  <div class="attribute-bonuses">
+    <label>{{localize 'ADARKDEEP.scores.int.long'}}</label>
+    <ol>
+      <li>
+        {{localize 'ADARKDEEP.SpokenLanguages'}} ({{localize data.languages.spoken}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.Literacy'}} ({{localize data.languages.literacy}})
+      </li>
+    </ol>
+  </div>
+  <div class="attribute-bonuses">
+    <label>{{localize 'ADARKDEEP.scores.wis.long'}}</label>
+    <ol>
+      <li>
+        {{localize 'ADARKDEEP.saves.magic.long'}} ({{mod data.scores.wis.mod}})
+      </li>
+    </ol>
+  </div>
+  <div class="attribute-bonuses">
+    <label>{{localize 'ADARKDEEP.scores.dex.long'}}</label>
+    <ol>
+      <li>
+        {{localize 'ADARKDEEP.Missile'}} ({{mod data.scores.dex.mod}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.Initiative'}} ({{mod data.scores.dex.init}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.ArmorClass'}} ({{mod data.scores.dex.mod}})
+      </li>
+    </ol>
+  </div>
+  <div class="attribute-bonuses">
+    <label>{{localize 'ADARKDEEP.scores.con.long'}}</label>
+    <ol>
+      <li>
+        {{localize 'ADARKDEEP.Health'}} ({{mod data.scores.con.mod}})
+      </li>
+    </ol>
+  </div>
+  <div class="attribute-bonuses">
+    <label>{{localize 'ADARKDEEP.scores.cha.long'}}</label>
+    <ol>
+      <li>
+        {{localize 'ADARKDEEP.NPCReaction'}} ({{mod data.scores.cha.npc}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.RetainersMax'}} ({{add data.scores.cha.mod 4}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.Loyalty'}} ({{add data.scores.cha.mod 7}})
+      </li>
+    </ol>
+  </div>
+</form>

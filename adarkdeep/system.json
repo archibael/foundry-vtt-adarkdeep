@@ -1,0 +1,29 @@
+{
+  "name": "adarkdeep",
+  "title": "Adventures Dark and Deep",
+  "description": "BRW Games' interpretation of the world's most popular RPG as it might have been in a second edition had the original creator stayed at the helm of the company.",
+  "version": "0.0.3",
+  "minimumCoreVersion": "0.8.9",
+  "compatibleCoreVersion": "0.8.9",
+  "templateVersion": 2,
+  "author": "Archibael",
+  "esmodules": ["adarkdeep.js"],
+  "styles": ["adarkdeep.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "socket": false,
+  "initiative": "1d10",
+  "gridDistance": 3.3333333333,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "hp",
+  "secondaryTokenAttribute": null,
+  "url": "https://your/hosted/system/repo/",
+  "manifest": "https://your/hosted/system/repo/system.json",
+  "download": "https://your/packaged/download/archive.zip"
+}
