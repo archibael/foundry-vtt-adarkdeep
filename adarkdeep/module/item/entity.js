@@ -104,21 +104,48 @@ export class OseItem extends Item {
 
   async rollFormula(options = {}) {
     const data = this.data.data;
-    if (!data.roll) {
+	let dialogskip = true;
+	let adder = "";
+    let newTarget = data.rollTarget;
+	if (!data.roll) {
       throw new Error("This Item does not have a formula to roll!");
     }
-
+	if (this.data.type=="skill") {
+	  dialogskip = false;
+      let skillability = data.ability;
+	  adder += "-2*(@item.data.level)";
+      switch (skillability) {
+       case "str":
+         newTarget = this.actor.data.data.scores.str.value;         
+         break;	
+       case "int":
+         newTarget = this.actor.data.data.scores.int.value;         
+         break;	
+       case "wis":
+         newTarget = this.actor.data.data.scores.wis.value;         
+         break;	
+	   case "dex":
+         newTarget = this.actor.data.data.scores.dex.value;         
+         break;	
+	   case "con":
+         newTarget = this.actor.data.data.scores.con.value;         
+         break;	
+	   case "cha":
+         newTarget = this.actor.data.data.scores.cha.value;         
+         break;	
+	  };
+	};
     const label = `${this.name}`;
-    const rollParts = [data.roll];
+    const rollParts = [data.roll + `${adder}`];
 
     let type = data.rollType;
-
+	
     const newData = {
       actor: this.actor.data,
       item: this.data,
       roll: {
         type: type,
-        target: data.rollTarget,
+        target: newTarget,
         blindroll: data.blindroll,
       },
     };
@@ -128,12 +155,12 @@ export class OseItem extends Item {
       event: options.event,
       parts: rollParts,
       data: newData,
-      skipDialog: true,
+      skipDialog: dialogskip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
       flavor: game.i18n.format("ADARKDEEP.roll.formula", { label: label }),
       title: game.i18n.format("ADARKDEEP.roll.formula", { label: label }),
-    });
-  }
+    });}
+
 
   spendSpell() {
     this.update({
@@ -189,8 +216,10 @@ export class OseItem extends Item {
       case "skill":
         roll = "";
         roll += data.roll ? data.roll : "";
-        roll += data.rollTarget1 ? CONFIG.ADARKDEEP.roll_type[data.rollType] : "";
-        roll += data.rollTarget1 ? data.rollTarget1 : "";
+		roll += data.level ? ` -2 x (${data.level} ${game.i18n.localize("ADARKDEEP.roll.skillLevels")}) ` : "";
+        roll += CONFIG.ADARKDEEP.roll_type[data.rollType];
+        roll += ` ${data.ability.toUpperCase()}`;
+		roll += data.multiability ? ` or ${data.ability2.toUpperCase()}` : "";
         if (data.roll) {
           tagList.push({label: `${game.i18n.localize("ADARKDEEP.items.Roll")} ${roll}`});
         }
@@ -309,6 +338,7 @@ export class OseItem extends Item {
       hasDamage: this.hasDamage,
       isSpell: this.data.type === "spell",
       hasSave: this.hasSave,
+	  hasOppCheck: this.data.data.oppability ? true : false,
       config: CONFIG.ADARKDEEP,
     };
     templateData.data.properties = this.getTagList();

@@ -46,12 +46,17 @@
                         data-dtype="Number" />
                 </div>
                 {{else}}
-                <h4 class="attribute-name box-title" title="{{localize 'ADARKDEEP.Thac0'}}"><a>{{ localize "ADARKDEEP.Thac0" }}</a>
-                </h4>
-                <div class="attribute-value">
-                    <input name="data.thac0.value" type="text" value="{{data.thac0.value}}" placeholder="0"
-                        data-dtype="Number" />
-                </div>
+                    <h4 class="attribute-name box-title" title="{{ localize 'ADARKDEEP.AttackCol' }}">{{ localize "ADARKDEEP.AttackCol"}}
+                    </h4>
+                    <div class="attribute-value">
+						<select name="data.achitby20.value" data-dtype="Number">
+							{{#select data.achitby20.value}}
+							{{#each config.attack_cols as |t a|}}
+								<option value="{{t}}">{{a}}</option>
+							{{/each}}
+							{{/select}}
+						</select> 
+                    </div>
                 {{/if}}
             </li>
             {{#if data.retainer.enabled}}

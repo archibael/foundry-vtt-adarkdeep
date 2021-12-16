@@ -46,6 +46,8 @@
   "ADARKDEEP.roll.reaction": "Reaction roll",
   "ADARKDEEP.roll.initiative": "Group {group} rolls for Initiative!",
   "ADARKDEEP.roll.individualInit": "{name} rolls for Initiative!",
+  "ADARKDEEP.roll.skillLevels" : "skill levels",
+  "ADARKDEEP.roll.opposingSkill" : "Opposing Ability",
 
   "ADARKDEEP.table.treasure.roll": "Roll Treasure",
 
@@ -89,15 +91,15 @@
   "ADARKDEEP.scores.cha.short": "CHA",
 
   "ADARKDEEP.saves.death.short": "D",
-  "ADARKDEEP.saves.death.long": "Death Poison",
+  "ADARKDEEP.saves.death.long": "Death Poison Para",
   "ADARKDEEP.saves.wand.short": "W",
-  "ADARKDEEP.saves.wand.long": "Wands",
+  "ADARKDEEP.saves.wand.long": "Wands Staves Rods",
   "ADARKDEEP.saves.paralysis.short": "P",
-  "ADARKDEEP.saves.paralysis.long": "Paralysis Petrify",
+  "ADARKDEEP.saves.paralysis.long": "Polymorph Petrify",
   "ADARKDEEP.saves.breath.short": "B",
   "ADARKDEEP.saves.breath.long": "Breath Attacks",
   "ADARKDEEP.saves.spell.short": "S",
-  "ADARKDEEP.saves.spell.long": "Spells Rods Staves",
+  "ADARKDEEP.saves.spell.long": "Spells",
   "ADARKDEEP.saves.magic.long": "Bonus vs Magic",
   "ADARKDEEP.saves.magic.short": "vs Magic",
 
@@ -123,6 +125,7 @@
   "ADARKDEEP.AscArmorClassShort": "AAC",
   "ADARKDEEP.ArmorClassBonus": "Armor Class Bonus",
   "ADARKDEEP.Thac0": "THAC0",
+  "ADARKDEEP.AttackCol": "AttCol.",
   "ADARKDEEP.ABShort": "AB",
   "ADARKDEEP.AB": "Attack Bonus",
   "ADARKDEEP.MeleeShort": "MEL",
@@ -270,11 +273,11 @@
   "ADARKDEEP.exploration.ft.abrev": "FT",
 
   "ADARKDEEP.messages.GetExperience": "{name} gained {value} experience points!",
-  "ADARKDEEP.messages.AttackSuccess": "<b>Hits AC {result}!</b> ({bonus})",
+  "ADARKDEEP.messages.AttackSuccess": "<b>Hits AC {result} or worse!</b> ({bonus})",
   "ADARKDEEP.messages.AttackAscendingSuccess": "<b>Hits AC {result}!</b>",
   "ADARKDEEP.messages.AttackFailure": "<b>Attack fails</b> ({bonus})",
   "ADARKDEEP.messages.AttackAscendingFailure": "<b>Attack fails</b>",
-  "ADARKDEEP.messages.InflictsDamage": "Inflicts damage!",
+  "ADARKDEEP.messages.InflictsDamage": "May inflict damage!",
   "ADARKDEEP.messages.applyDamage": "Apply Damage",
   "ADARKDEEP.messages.applyHealing": "Apply Healing",
 
@@ -288,9 +291,11 @@
 
   "ADARKDEEP.reaction.check": "Reaction Check",
   "ADARKDEEP.reaction.Hostile": "{name} is Hostile",
-  "ADARKDEEP.reaction.Unfriendly": "{name} is Unfriendly",
-  "ADARKDEEP.reaction.Neutral": "{name} is Neutral",
-  "ADARKDEEP.reaction.Indifferent": "{name} is Indifferent",
-  "ADARKDEEP.reaction.Friendly": "{name} is Friendly"
+  "ADARKDEEP.reaction.Attack": "{name} is Hostile and immediately attacks",
+  "ADARKDEEP.reaction.Negative": "{name} is Negative",
+  "ADARKDEEP.reaction.Neutral": "{name} is Uncertain/Neutral",
+  "ADARKDEEP.reaction.Positive": "{name} is Positive",
+  "ADARKDEEP.reaction.Friendly": "{name} is Friendly",
+  "ADARKDEEP.reaction.Accepting": "{name} is Accepting"
   
 }

@@ -185,13 +185,13 @@ export class OseActor extends Actor {
   }
 
   rollMorale(options = {}) {
-    const rollParts = ["2d6"];
+    const rollParts = [`1d20+${this.data.data.details.morale}`];
 
     const data = {
       actor: this.data,
       roll: {
-        type: "below",
-        target: this.data.data.details.morale,
+        type: "above",
+        target: 10,
       },
     };
 
@@ -232,26 +232,32 @@ export class OseActor extends Actor {
   }
 
   rollReaction(options = {}) {
-    const rollParts = ["2d6"];
+    const rollParts = ["1d100"];
 
     const data = {
       actor: this.data,
       roll: {
         type: "table",
         table: {
-          2: game.i18n.format("ADARKDEEP.reaction.Hostile", {
+          1: game.i18n.format("ADARKDEEP.reaction.Attack", {
             name: this.data.name,
           }),
-          3: game.i18n.format("ADARKDEEP.reaction.Unfriendly", {
+          6: game.i18n.format("ADARKDEEP.reaction.Hostile", {
             name: this.data.name,
           }),
-          6: game.i18n.format("ADARKDEEP.reaction.Neutral", {
+          26: game.i18n.format("ADARKDEEP.reaction.Negative", {
             name: this.data.name,
           }),
-          9: game.i18n.format("ADARKDEEP.reaction.Indifferent", {
+          37: game.i18n.format("ADARKDEEP.reaction.Neutral", {
             name: this.data.name,
           }),
-          12: game.i18n.format("ADARKDEEP.reaction.Friendly", {
+          65: game.i18n.format("ADARKDEEP.reaction.Positive", {
+            name: this.data.name,
+          }),
+          76: game.i18n.format("ADARKDEEP.reaction.Friendly", {
+            name: this.data.name,
+          }),
+          96: game.i18n.format("ADARKDEEP.reaction.Accepting", {
             name: this.data.name,
           }),
         },
@@ -474,6 +480,7 @@ export class OseActor extends Actor {
       rollParts.push(attData.item.data.bonus);
     }
     let thac0 = data.thac0.value;
+	let hitbase = data.achitby20.value;
     if (options.type == "melee") {
       dmgParts.push(data.scores.str.mod);
     }
@@ -483,6 +490,7 @@ export class OseActor extends Actor {
       roll: {
         type: options.type,
         thac0: thac0,
+		hitbase: hitbase,
         dmg: dmgParts,
         save: attData.roll.save,
         target: attData.roll.target,

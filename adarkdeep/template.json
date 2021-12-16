@@ -29,6 +29,9 @@
             "melee": 0
           }
         },
+		"achitby20": {
+		  "value": 1
+		},
         "saves": {
           "death": {
             "value": 0
@@ -230,18 +233,19 @@
       "save": ""
     },
     "skill": {
+      "pattern": "white",
       "specialties": "",
 	  "level":0,
-	  "ability1":"",
+	  "ability":"",
 	  "ability2":"",
       "roll": "1d20",
       "rollType": "below",
-      "rollTarget1": 0,
+      "rollTarget": 0,
 	  "rollTarget2":0,
       "blindroll": false,
       "description": "",
 	  "multiability" : false,
-      "save": ""
+      "oppability": ""
     }
   }
 }

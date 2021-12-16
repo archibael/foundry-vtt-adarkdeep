@@ -18,6 +18,7 @@ export const registerHelpers = async function () {
     }
   });
 
+
   Handlebars.registerHelper("add", function (lh, rh) {
     return parseInt(lh) + parseInt(rh);
   });
@@ -37,6 +38,12 @@ export const registerHelpers = async function () {
   Handlebars.registerHelper("roundWeight", function (weight) {
     return Math.round(parseFloat(weight) / 100) / 10;
   });
+
+  Handlebars.registerHelper("caps", function (mixed) {
+    return mixed.toUpperCase();
+  });
+
+
 
   Handlebars.registerHelper("getTagIcon", function (tag) {
     let idx = Object.keys(CONFIG.ADARKDEEP.tags).find(k => (CONFIG.ADARKDEEP.tags[k] == tag));

@@ -35,6 +35,11 @@
             <button data-action="formula">{{ localize "ADARKDEEP.Roll"}} {{data.roll}} {{#if data.blindroll}}({{localize
                 'ADARKDEEP.items.BlindRoll'}}){{/if}}</button>
             {{/if}}
+			
+            {{#if data.oppability}}
+            <button data-action="formula">{{ localize "ADARKDEEP.roll.opposingSkill"}} {{caps data.oppability}} {{#if data.blindroll}}({{localize
+                'ADARKDEEP.items.BlindRoll'}}){{/if}}</button>
+            {{/if}}
         </div>
 
         <footer class="card-footer">

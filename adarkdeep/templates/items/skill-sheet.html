@@ -25,8 +25,8 @@
         <div class="form-group block-input">
           <label>{{localize 'ADARKDEEP.items.Ability'}}</label>
           <div class="form-fields">
-			<select name="data.ability1">
-              {{#select data.ability1}}
+			<select name="data.ability">
+              {{#select data.ability}}
               {{#each config.scores_short as |t a|}}
               <option value="{{a}}">{{t}}</option>
               {{/each}}
@@ -37,7 +37,7 @@
          <div class="form-group">
           <label>{{localize 'ADARKDEEP.items.RollTarget'}}</label>
           <div class="form-fields">
-            <input type="text" name="data.rollTarget1" value="{{data.rollTarget1}}" data-dtype="Number" />
+            <input type="text" name="data.rollTarget" value="{{data.rollTarget}}" data-dtype="Number" />
           </div>
         </div>
         <div class="form-group">
@@ -91,13 +91,13 @@
           </div>
         </div>
         <div class="form-group">
-          <label>{{localize 'ADARKDEEP.spells.Save'}}</label>
+          <label>{{localize 'ADARKDEEP.roll.opposingSkill'}}</label>
           <div class="form-fields">
-            <select name="data.save">
-              {{#select data.save}}
+            <select name="data.oppability">
+              {{#select data.oppability}}
               <option value=""></option>
-              {{#each config.saves_short as |save a|}}
-              <option value="{{a}}">{{save}}</option>
+              {{#each config.scores_short as |t a|}}
+              <option value="{{a}}">{{t}}</option>
               {{/each}}
               {{/select}}
             </select>

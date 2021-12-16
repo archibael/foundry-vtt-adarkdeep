@@ -49,6 +49,33 @@ export class OseDice {
     }
 
     templateData.result = OseDice.digestResult(data, roll);
+  if (data.item) {
+	if (data.item.type=="skill") {
+		let altdata = data;
+		altdata.roll.target = null;
+		switch (altdata.item.data.ability2) {
+			case "str":
+			  altdata.roll.target = altdata.actor.data.scores.str.value;         
+			  break;	
+			case "int":
+			  altdata.roll.target = altdata.actor.data.scores.int.value;         
+			  break;	
+			case "wis":
+			  altdata.roll.target = altdata.actor.data.scores.wis.value;         
+			  break;	
+			case "dex":
+			  altdata.roll.target = altdata.actor.data.scores.dex.value;         
+			  break;	
+			case "con":
+			  altdata.roll.target = altdata.actor.data.scores.con.value;         
+			  break;	
+			case "cha":
+			  altdata.roll.target = altdata.actor.data.scores.cha.value;         
+			  break;	
+		};
+		templateData.altresult = OseDice.digestResult(altdata, roll);
+	}
+  }
 
     return new Promise((resolve) => {
       roll.render().then((r) => {
@@ -125,14 +152,23 @@ export class OseDice {
     return result;
   }
 
-  static attackIsSuccess(roll, thac0, ac) {
-    if (roll.total == 1 || roll.terms[0].results[0] == 1) {
-      return false;
-    }
-    if (roll.total >= 20 || roll.terms[0].results[0] == 20) {
-      return true, -3;
-    }
-    if (roll.total + ac >= thac0) {
+  static attackIsSuccess(roll, hitbase, ac) {
+		let achit;
+		if (roll.total < 20) {
+			achit = ((20-roll.total)+hitbase)
+		} else {
+			achit = (20-roll.total)+(hitbase-5)
+		}
+//    if (roll.total == 1 || roll.terms[0].results[0] == 1) {
+//      return false;
+//    }
+//    if (roll.total >= 20 || roll.terms[0].results[0] == 20) {
+//      return true, -10;
+//    }
+	if (achit > ac) {
+	  return false;
+	}
+    if (achit  <= ac) {
       return true;
     }
     return false;
@@ -145,11 +181,11 @@ export class OseDice {
       target: "",
       total: roll.total,
     };
-    result.target = data.roll.thac0;
+    result.target = data.roll.hitbase;
 
     const targetAc = data.roll.target
       ? data.roll.target.actor.data.data.ac.value
-      : 9;
+      : 10;
     const targetAac = data.roll.target
       ? data.roll.target.actor.data.data.aac.value
       : 0;
@@ -172,15 +208,21 @@ export class OseDice {
     } else {
       if (!this.attackIsSuccess(roll, result.target, targetAc)) {
         result.details = game.i18n.format("ADARKDEEP.messages.AttackFailure", {
-          bonus: result.target,
+          bonus: targetAc,
         });
         return result;
       }
       result.isSuccess = true;
-      let value = Math.clamped(result.target - roll.total, -3, 9);
+	  let achit;
+	  if (roll.total < 20) {
+		achit = ((20-roll.total)+result.target)
+  	  } else {
+		achit = (20-roll.total)+(result.target-5)
+  	  }
+      let value = Math.clamped(achit, -10, 10);
       result.details = game.i18n.format("ADARKDEEP.messages.AttackSuccess", {
         result: value,
-        bonus: result.target,
+        bonus: targetAc,
       });
     }
     return result;
