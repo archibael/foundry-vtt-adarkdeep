@@ -30,7 +30,7 @@ export class OsePartySheet extends FormApplication {
    */
   getData() {
     const settings = {
-      ascending: game.settings.get('adarkdeep', 'ascendingAC')
+//      ascending: game.settings.get('adarkdeep', 'ascendingAC')
     };
     let data = {
       data: this.object,
@@ -59,7 +59,7 @@ export class OsePartySheet extends FormApplication {
   }
 
   async _selectActors(ev) {
-    const entities = this.object.entities.sort((a, b) => b.data.token.disposition - a.data.token.disposition);
+    const entities = this.object.documents.sort((a, b) => b.data.token.disposition - a.data.token.disposition);
     const template = "/systems/adarkdeep/templates/apps/party-select.html";
     const templateData = {
       actors: entities
@@ -76,7 +76,7 @@ export class OsePartySheet extends FormApplication {
             let checks = html.find("input[data-action='select-actor']");
             await Promise.all(checks.map(async (_, c) => {
               let key = c.getAttribute('name');
-              await this.object.entities[key].setFlag('adarkdeep', 'party', c.checked);
+              await this.object.documents[key].setFlag('adarkdeep', 'party', c.checked);
             }));
             this.render(true);
           },

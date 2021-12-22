@@ -1,5 +1,5 @@
 export const RenderCompendium = async function(object, html, d) {
-    if (object.metadata.entity != "Item") {
+    if (object.documentName != "Item") {
         return;
     }
     const render = html[0].querySelectorAll(".item");
@@ -24,7 +24,7 @@ export const RenderDirectory = async function(object, html) {
     render.forEach(function(item) {
         const tagList = document.createElement("ol");
         tagList.classList.add("tag-list");
-        const entity = content.find((e) => e.id == item.dataset.entityId);
+        const entity = content.find((e) => e.id == item.dataset.documentId);
         const tags = entity.getTags();
         tagList.innerHTML = tags;
         item.appendChild(tagList);

@@ -14,7 +14,7 @@ export class OseActorSheet extends ActorSheet {
 
     data.config = {
       ...CONFIG.ADARKDEEP,
-      ascendingAC: game.settings.get("adarkdeep", "ascendingAC"),
+//      ascendingAC: game.settings.get("adarkdeep", "ascendingAC"),
       initiative: game.settings.get("adarkdeep", "initiative") != "group",
       encumbrance: game.settings.get("adarkdeep", "encumbranceOption")
     };

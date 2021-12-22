@@ -2,14 +2,21 @@
   "name": "adarkdeep",
   "title": "Adventures Dark and Deep",
   "description": "BRW Games' interpretation of the world's most popular RPG as it might have been in a second edition had the original creator stayed at the helm of the company.",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "minimumCoreVersion": "0.8.9",
-  "compatibleCoreVersion": "0.8.9",
+  "compatibleCoreVersion": "0.9.0",
   "templateVersion": 2,
   "author": "Archibael",
   "esmodules": ["adarkdeep.js"],
   "styles": ["adarkdeep.css"],
-  "packs": [],
+  "packs": [
+    {
+      "name": "Skills",
+      "label": "ADD Skills",
+      "path": "packs/add-skills.db",
+      "entity": "Item"
+    }
+  ],
   "languages": [
     {
       "lang": "en",

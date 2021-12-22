@@ -28,15 +28,15 @@ export const registerSettings = function () {
     }
   });
 
-  game.settings.register("adarkdeep", "ascendingAC", {
-    name: game.i18n.localize("ADARKDEEP.Setting.AscendingAC"),
-    hint: game.i18n.localize("ADARKDEEP.Setting.AscendingACHint"),
-    default: false,
-    scope: "world",
-    type: Boolean,
-    config: true,
-    onChange: _ => window.location.reload()
-  });
+//  game.settings.register("adarkdeep", "ascendingAC", {
+//    name: game.i18n.localize("ADARKDEEP.Setting.AscendingAC"),
+//    hint: game.i18n.localize("ADARKDEEP.Setting.AscendingACHint"),
+//    default: false,
+//    scope: "world",
+//    type: Boolean,
+//    config: true,
+//    onChange: _ => window.location.reload()
+//  });
 
   game.settings.register("adarkdeep", "morale", {
     name: game.i18n.localize("ADARKDEEP.Setting.Morale"),

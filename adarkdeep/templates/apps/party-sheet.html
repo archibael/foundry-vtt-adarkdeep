@@ -15,7 +15,7 @@
     {{/if}}
   </div>
   <ol class="actor-list">
-    {{#each data.entities as |e|}} {{#if e.data.flags.adarkdeep.party}}
+    {{#each data.documents as |e|}} {{#if e.data.flags.adarkdeep.party}}
     <li class="actor flexrow" data-actor-id="{{e.id}}">
       <div class="field-img">
         <img src="{{e.img}}" />
@@ -34,24 +34,14 @@
           </div>
           <div class="field-short" title="{{localize 'ADARKDEEP.ArmorClass'}}">
             <i class="fas fa-shield-alt"></i>
-            {{#if @root.settings.ascending}}<strong>{{e.data.data.aac.value}}</strong>
-            <sub>{{e.data.data.aac.naked}}</sub>
-            {{else}}<strong>{{e.data.data.ac.value}}</strong> <sub>{{e.data.data.ac.naked}}</sub>
-            {{/if}}
+            <strong>{{e.data.data.ac.value}}</strong> <sub>{{e.data.data.ac.naked}}</sub>
           </div>
         </div>
         <div class="flexrow field-row">
-          {{#unless @root.settings.ascending}}
           <div class="field-short" title="{{localize 'ADARKDEEP.Thac0'}}">
             <i class="fas fa-crosshairs"></i>
             {{e.data.data.thac0.value}}
           </div>
-          {{else}}
-          <div class="field-short" title="{{localize 'ADARKDEEP.AB'}}">
-            <i class="fas fa-crosshairs"></i>
-            {{e.data.data.thac0.bba}}
-          </div>
-          {{/unless}}
           {{#if (eq e.data.type 'character')}}
           <div class="field-short" title="{{localize 'ADARKDEEP.Melee'}}">
             <i class="fas fa-fist-raised"></i>

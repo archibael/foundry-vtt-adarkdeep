@@ -17,10 +17,6 @@
           "value": 0,
           "mod": 0
         },
-        "aac": {
-          "value": 0,
-          "mod": 0
-        },
         "thac0": {
           "value": 19,
           "bba": 0,
@@ -30,27 +26,42 @@
           }
         },
 		"achitby20": {
-		  "value": 1
+		  "value": 1,
+		  "mod": {
+            "missile": 0,
+            "melee": 0
+		  }
 		},
         "saves": {
           "death": {
-            "value": 0
+            "value": 0,
+			"mod": 0
           },
           "wand": {
-            "value": 0
+            "value": 0,
+			"mod": 0
           },
           "paralysis": {
-            "value": 0
+            "value": 0,
+			"mod": 0
           },
           "breath": {
-            "value": 0
+            "value": 0,
+			"mod": 0
           },
           "spell": {
-            "value": 0
+            "value": 0,
+			"mod": 0
           }
         },
         "movement": {
-          "base": 120
+          "base": 120,
+		  "fly": 0,
+		  "maneuvclass" : "",
+		  "burrow": 0,
+		  "swim": 0,
+		  "climb" : 0,
+		  "other" : 0
         },
         "initiative": {
           "value": 0,
@@ -77,6 +88,75 @@
           },
           "6": {
             "max": 0
+          },
+          "7": {
+            "max": 0
+          },
+          "8": {
+            "max": 0
+          },
+          "9": {
+            "max": 0
+          }
+        },
+        "spells2": {
+          "enabled": false,
+          "1": {
+            "max": 0
+          },
+          "2": {
+            "max": 0
+          },
+          "3": {
+            "max": 0
+          },
+          "4": {
+            "max": 0
+          },
+          "5": {
+            "max": 0
+          },
+          "6": {
+            "max": 0
+          },
+          "7": {
+            "max": 0
+          },
+          "8": {
+            "max": 0
+          },
+          "9": {
+            "max": 0
+          }
+        },
+        "spells3": {
+          "enabled": false,
+          "1": {
+            "max": 0
+          },
+          "2": {
+            "max": 0
+          },
+          "3": {
+            "max": 0
+          },
+          "4": {
+            "max": 0
+          },
+          "5": {
+            "max": 0
+          },
+          "6": {
+            "max": 0
+          },
+          "7": {
+            "max": 0
+          },
+          "8": {
+            "max": 0
+          },
+          "9": {
+            "max": 0
           }
         }
       }
@@ -90,10 +170,26 @@
         "biography": "",
         "notes": "",
         "class": "",
+		"class2": "",
+		"class3": "",
         "title": "",
         "alignment": "",
         "level": 1,
+		"level2" : null,
+		"level3" : null,
         "xp": {
+          "share": 100,
+          "next": 2000,
+          "value": 0,
+          "bonus": 0
+        },
+        "xp2": {
+          "share": 100,
+          "next": 2000,
+          "value": 0,
+          "bonus": 0
+        },
+        "xp3": {
           "share": 100,
           "next": 2000,
           "value": 0,
@@ -108,27 +204,30 @@
       },
       "scores": {
         "str": {
-          "value": 0,
+          "value": 10,
+		  "except": "01",
+		  "exenabled": false,
           "bonus": 0
         },
         "int": {
-          "value": 0,
+          "value": 10,
           "bonus": 0
         },
         "wis": {
-          "value": 0,
+          "value": 10,
           "bonus": 0
         },
         "dex": {
-          "value": 0,
+          "value": 10,
           "bonus": 0
         },
         "con": {
-          "value": 0,
-          "bonus": 0
+          "value": 10,
+		  "limited": false,
+          "bonus": 10
         },
         "cha": {
-          "value": 0,
+          "value": 10,
           "bonus": 0
         }
       },
@@ -144,16 +243,25 @@
       "details": {
         "biography": "",
         "alignment": "",
-        "xp": 0,
+        "xp": {
+			"value": 0,
+			"compbase": 0,
+			"comphpmult": 0
+		},
         "treasure": {
           "table": "",
-          "type": ""
+          "value": "",
+		  "magic": ""
         },
         "appearing": {
-          "d": 0,
-          "w": 0
+          "d": 1,
+          "w": 1
         },
-        "morale": 0
+        "morale": 0,
+		"magicresist0level": 1,
+		"size": "",
+		"sizedetail": "",
+		"turnas": ""
       },
       "attacks": ""
     }
@@ -234,14 +342,14 @@
     },
     "skill": {
       "pattern": "white",
+	  "xpcost": "",
+	  "avail_specialties": "",
       "specialties": "",
 	  "level":0,
 	  "ability":"",
 	  "ability2":"",
       "roll": "1d20",
       "rollType": "below",
-      "rollTarget": 0,
-	  "rollTarget2":0,
       "blindroll": false,
       "description": "",
 	  "multiability" : false,

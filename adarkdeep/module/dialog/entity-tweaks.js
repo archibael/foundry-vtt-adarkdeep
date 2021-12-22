@@ -33,7 +33,7 @@ export class OseEntityTweaks extends FormApplication {
       data.isCharacter = true;
     }
     data.user = game.user;
-    data.config = { ...CONFIG.SE, ascendingAC: game.settings.get("adarkdeep", "ascendingAC") };
+    data.config = { ...CONFIG.SE };
     return data;
   }
 

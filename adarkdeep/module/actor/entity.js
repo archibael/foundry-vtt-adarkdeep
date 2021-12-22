@@ -663,12 +663,12 @@ export class OseActor extends Actor {
     const data = this.data.data;
 
     // Compute AC
-    let baseAc = 9;
-    let baseAac = 10;
+    let baseAc = 10;
+//    let baseAac = 10;
     let AcShield = 0;
-    let AacShield = 0;
+//    let AacShield = 0;
 
-    data.aac.naked = baseAac + data.scores.dex.mod;
+//    data.aac.naked = baseAac + data.scores.dex.mod;
     data.ac.naked = baseAc - data.scores.dex.mod;
     const armors = this.data.items.filter((i) => i.type == "armor");
     armors.forEach((a) => {
@@ -676,16 +676,16 @@ export class OseActor extends Actor {
       if (!armorData.equipped) return;
       if (armorData.type == "shield") {
         AcShield = armorData.ac.value;
-        AacShield = armorData.aac.value;
+//        AacShield = armorData.aac.value;
         return
       }
       baseAc = armorData.ac.value;
-      baseAac = armorData.aac.value;
+//      baseAac = armorData.aac.value;
     });
-    data.aac.value = baseAac + data.scores.dex.mod + AacShield + data.aac.mod;
+//    data.aac.value = baseAac + data.scores.dex.mod + AacShield + data.aac.mod;
     data.ac.value = baseAc - data.scores.dex.mod - AcShield - data.ac.mod;
     data.ac.shield = AcShield;
-    data.aac.shield = AacShield;
+//    data.aac.shield = AacShield;
   }
 
   computeModifiers() {

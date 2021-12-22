@@ -60,7 +60,7 @@
   "ADARKDEEP.details.experience.bonus": "Bonus Experience",
   "ADARKDEEP.details.experience.next": "Next level",
   "ADARKDEEP.details.experience.share": "Experience Share",
-  "ADARKDEEP.details.experience.award": "XP Award",
+  "ADARKDEEP.details.experience.award": "XPBase+(hp x XP/hp) = XP",
   "ADARKDEEP.details.treasure": "Treasure type",
   "ADARKDEEP.details.treasureTable": "Table",
   "ADARKDEEP.details.treasureTableHint": "Drop a rollable table here to roll the monster treasure",
