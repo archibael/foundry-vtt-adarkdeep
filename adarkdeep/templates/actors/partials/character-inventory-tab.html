@@ -57,11 +57,7 @@
     <li class="item-titles flexrow">
       <div class="item-caret"><i class="fas fa-caret-down"></i></div>
       <div class="item-name">{{localize "ADARKDEEP.items.Armors"}}</div>
-      {{#if @root.config.ascendingAC}}
-      <div class="field-short">{{localize "ADARKDEEP.items.ArmorAAC"}}</div>
-      {{else}}
       <div class="field-short">{{localize "ADARKDEEP.items.ArmorAC"}}</div>
-      {{/if}}
       <div class="field-short"><i class="fas fa-weight-hanging"></i></div>
       <div class="item-controls">
         <a class="item-control item-create" data-type="armor" title="{{localize 'ADARKDEEP.Add'}}"><i
@@ -81,11 +77,13 @@
             </a>
           </div>
           <div class="field-short">
-            {{#if @root.config.ascendingAC}}
-            {{item.data.data.aac.value}}
-            {{else}}
-            {{item.data.data.ac.value}}
-            {{/if}}
+			{{#if item.data.data.equipped}}
+			 {{#if item.data.data.isShield}}
+				{{#subtractint -1 item.data.data.bonus}}{{/subtractint}}
+			 {{else}}
+				{{#subtractint item.data.data.ac item.data.data.bonus}}{{/subtractint}}
+			 {{/if}}
+			{{/if}}
           </div>
           <div class="field-short">
             {{#if (eq @root.config.encumbrance "basic")}}_{{else}}{{item.data.data.weight}}{{/if}}

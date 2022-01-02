@@ -8,7 +8,7 @@ export class OseCharacterModifiers extends FormApplication {
     options.id = 'sheet-modifiers';
     options.template =
       'systems/adarkdeep/templates/actors/dialogs/modifiers-dialog.html';
-    options.width = 240;
+    options.width = 360;
     return options;
   }
 

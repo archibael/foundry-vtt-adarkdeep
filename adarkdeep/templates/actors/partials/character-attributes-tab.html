@@ -73,29 +73,25 @@
     <div class="resources">
         <div class="flexrow">
             <div class="health">
+			{{#if (lte data.hp.value -1)}}
+                <input class="health-value health-topred" name="data.hp.value" type="text" value="{{data.hp.value}}"
+                    data-dtype="Number" placeholder="0" title="{{localize 'ADARKDEEP.Health'}}" />
+			{{else}}
                 <input class="health-value health-top" name="data.hp.value" type="text" value="{{data.hp.value}}"
                     data-dtype="Number" placeholder="0" title="{{localize 'ADARKDEEP.Health'}}" />
-                <input class="health-value health-bottom" name="data.hp.max" type="text" value="{{data.hp.max}}"
+			{{/if}}
+               <input class="health-value health-bottom" name="data.hp.max" type="text" value="{{data.hp.max}}"
                     data-dtype="Number" placeholder="0" title="{{localize 'ADARKDEEP.HealthMax'}}" />
                 <div class="health-empty" style="height:{{counter false data.hp.value data.hp.max}}%"></div>
                 <div class="health-full" style="height:{{counter true data.hp.value data.hp.max}}%"></div>
             </div>
             <div class="health armor-class">
-                {{#if config.ascendingAC}}
-                <div class="health-value health-top" title="{{localize 'ADARKDEEP.ArmorClass'}}">{{data.aac.value}}</div>
-                <div class="health-value health-bottom" title="{{localize 'ADARKDEEP.ArmorClassNaked'}}">
-                    {{data.aac.naked}}</div>
-                {{#if data.aac.shield}}<div class="shield"
-                    title="{{localize 'ADARKDEEP.items.hasShield'}} ({{data.aac.shield}})"><i class="fas fa-shield-alt"></i>
-                </div>{{/if}}
-                {{else}}
-                <div class="health-value health-top" title="{{localize 'ADARKDEEP.ArmorClass'}}">{{data.ac.value}}</div>
+                 <div class="health-value health-top" title="{{localize 'ADARKDEEP.ArmorClass'}}">{{data.ac.value}}</div>
                 <div class="health-value health-bottom" title="{{localize 'ADARKDEEP.ArmorClassNaked'}}">
                     {{data.ac.naked}}</div>
                 {{#if data.ac.shield}}<div class="shield"
                     title="{{localize 'ADARKDEEP.items.hasShield'}} ({{data.ac.shield}})"><i class="fas fa-shield-alt"></i>
                 </div>{{/if}}
-                {{/if}}
             </div>
         </div>
         <div class="flexrow">
@@ -130,22 +126,11 @@
                     <div class="flexrow">
                         <div class="attribute-value"
                             title="{{localize 'ADARKDEEP.scores.str.long'}}({{data.scores.str.mod}}) + {{localize 'ADARKDEEP.Modifier'}}({{data.thac0.mod.melee}})">
-                            {{add data.scores.str.mod data.thac0.mod.melee}}
+                            {{add data.scores.str.tohit data.thac0.mod.melee}}
                         </div>
                     </div>
                 </li>
-                {{#if config.ascendingAC}}
-                <li class="attribute">
-                    <h4 class="attribute-name box-title" title="{{ localize 'ADARKDEEP.AB' }}">{{ localize "ADARKDEEP.ABShort"}}
-                    </h4>
-                    <div class="flexrow">
-                        <div class="attribute-value">
-                            <input name="data.thac0.bba" type="text" value="{{data.thac0.bba}}" placeholder="0"
-                                data-dtype="Number" />
-                        </div>
-                    </div>
-                </li>
-                {{else}}
+
                 <li class="attribute">
                     <h4 class="attribute-name box-title" title="{{ localize 'ADARKDEEP.AttackCol' }}">{{ localize "ADARKDEEP.AttackCol"}}
                     </h4>
@@ -161,7 +146,6 @@
                         </div>
                     </div>
                 </li>
-                {{/if}}
                 <li class="attribute attribute-secondaries attack" data-attack="missile">
                     <h4 class="attribute-name box-title" title="{{localize 'ADARKDEEP.Missile'}}">
                         <a>{{localize 'ADARKDEEP.MissileShort'}}</a>
@@ -169,7 +153,7 @@
                     <div class="flexrow">
                         <div class="attribute-value"
                             title="{{localize 'ADARKDEEP.scores.dex.long'}}({{data.scores.dex.mod}}) + {{localize 'ADARKDEEP.Modifier'}}({{data.thac0.mod.missile}})">
-                            {{add data.scores.dex.mod data.thac0.mod.missile}}
+                            {{add data.scores.dex.missile data.thac0.mod.missile}}
                         </div>
                     </div>
                 </li>
@@ -199,7 +183,7 @@
                         {{localize 'ADARKDEEP.movement.encounter.short'}}</h4>
                     <div class="flexrow">
                         <div class="attribute-value">
-                            {{divide data.movement.base 3}}
+                            {{divide (mult data.movement.base 3) 10}}
                         </div>
                     </div>
                 </li>

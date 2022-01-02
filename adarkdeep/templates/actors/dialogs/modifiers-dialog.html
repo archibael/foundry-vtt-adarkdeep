@@ -3,10 +3,22 @@
     <label>{{localize 'ADARKDEEP.scores.str.long'}}</label>
     <ol>
       <li>
-        {{localize 'ADARKDEEP.Melee'}} ({{mod data.scores.str.mod}})
+        {{localize 'ADARKDEEP.MeleeBonus'}} ({{mod data.scores.str.tohit}})
       </li>
       <li>
-        {{localize 'ADARKDEEP.exploration.od.long'}} ({{data.exploration.odMod}} in 6)
+        {{localize 'ADARKDEEP.MeleeDmg'}} ({{mod data.scores.str.dmg}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.AddedWeight'}} ({{mod data.scores.str.weight}} lbs.)
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.exploration.od.long'}} ({{data.scores.str.stuckdoorchance}} in {{data.scores.str.stuckdoordie}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.exploration.old.long'}} ({{data.scores.str.lockdoorchance}} in {{data.scores.str.lockdoordie}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.BendBars'}} ({{data.scores.str.barsgates}}%)
       </li>
     </ol>
   </div>
@@ -14,32 +26,39 @@
     <label>{{localize 'ADARKDEEP.scores.int.long'}}</label>
     <ol>
       <li>
-        {{localize 'ADARKDEEP.SpokenLanguages'}} ({{localize data.languages.spoken}})
-      </li>
+        {{localize 'ADARKDEEP.MaxNumLang'}} ({{data.scores.int.maxlang}})
+      </li>  
+{{#if (gt data.scores.int.illusimmunlvl 1)}}
       <li>
-        {{localize 'ADARKDEEP.Literacy'}} ({{localize data.languages.literacy}})
+        {{localize 'ADARKDEEP.IllusImmune'}} ({{data.scores.int.illusimmunlvl}})
       </li>
+{{/if}}
     </ol>
   </div>
   <div class="attribute-bonuses">
     <label>{{localize 'ADARKDEEP.scores.wis.long'}}</label>
     <ol>
       <li>
-        {{localize 'ADARKDEEP.saves.magic.long'}} ({{mod data.scores.wis.mod}})
+        {{localize 'ADARKDEEP.WillBonus'}} ({{mod data.scores.wis.mindattackadj}})
       </li>
+{{#if (gt data.scores.wis.enchantimmunlvl 1)}}
+      <li>
+        {{localize 'ADARKDEEP.EnchantImmune'}} ({{data.scores.wis.enchantimmunlvl}})
+      </li>
+{{/if}}
     </ol>
   </div>
   <div class="attribute-bonuses">
     <label>{{localize 'ADARKDEEP.scores.dex.long'}}</label>
     <ol>
       <li>
-        {{localize 'ADARKDEEP.Missile'}} ({{mod data.scores.dex.mod}})
-      </li>
-      <li>
         {{localize 'ADARKDEEP.Initiative'}} ({{mod data.scores.dex.init}})
       </li>
       <li>
-        {{localize 'ADARKDEEP.ArmorClass'}} ({{mod data.scores.dex.mod}})
+        {{localize 'ADARKDEEP.MissileBonus'}} ({{mod data.scores.dex.missile}})
+      </li>
+	  <li>
+        {{localize 'ADARKDEEP.ArmorClassBonus'}} ({{mod data.scores.dex.acadj}})
       </li>
     </ol>
   </div>
@@ -47,7 +66,13 @@
     <label>{{localize 'ADARKDEEP.scores.con.long'}}</label>
     <ol>
       <li>
-        {{localize 'ADARKDEEP.Health'}} ({{mod data.scores.con.mod}})
+        {{localize 'ADARKDEEP.HealthAdj'}} ({{mod data.scores.con.hpadj}})
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.SysShock'}} ({{data.scores.con.shock}}%)
+      </li>
+      <li>
+        {{localize 'ADARKDEEP.ResSurvive'}} ({{data.scores.con.ressur}}%)
       </li>
     </ol>
   </div>
@@ -55,13 +80,13 @@
     <label>{{localize 'ADARKDEEP.scores.cha.long'}}</label>
     <ol>
       <li>
-        {{localize 'ADARKDEEP.NPCReaction'}} ({{mod data.scores.cha.npc}})
+        {{localize 'ADARKDEEP.RetainersMax'}} ({{data.scores.cha.henchmax}})
       </li>
       <li>
-        {{localize 'ADARKDEEP.RetainersMax'}} ({{add data.scores.cha.mod 4}})
+        {{localize 'ADARKDEEP.MoraleAdj'}} ({{mod data.scores.cha.moraleadj}})
       </li>
       <li>
-        {{localize 'ADARKDEEP.Loyalty'}} ({{add data.scores.cha.mod 7}})
+        {{localize 'ADARKDEEP.NPCReaction'}} ({{mod data.scores.cha.reaction}}%)
       </li>
     </ol>
   </div>

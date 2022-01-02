@@ -10,31 +10,44 @@
   <section class="sheet-body">
     <div class="flexrow">
       <div class="stats">
+		<div class="form-group">
+          <label>{{localize 'ADARKDEEP.items.Shield'}}</label>
+          <div class="form-fields">
+          <input type="checkbox" name="data.isShield" value="{{data.isShield}}" {{checked data.isShield}}  data-dtype="Number"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{{localize 'ADARKDEEP.items.Bonus'}}</label>
+          <div class="form-fields">
+            <input type="text" name="data.bonus" value="{{data.bonus}}" data-dtype="Number" />
+          </div>
+        </div>
+		<div class="form-group">
+          <label>{{localize 'ADARKDEEP.items.Helm'}}</label>
+          <div class="form-fields">
+          <input type="checkbox" name="data.withHelm" value="{{data.withHelm}}" {{checked data.withHelm}}  data-dtype="Number"/>
+          </div>
+        </div>
+	{{#unless data.isShield}}
         <div class="form-group">
           <label>{{localize 'ADARKDEEP.items.ArmorAC'}}</label>
           <div class="form-fields">
-            <input type="text" name="data.ac.value" value="{{data.ac.value}}" data-dtype="Number" />
+            <input type="text" name="data.ac" value="{{data.ac}}" data-dtype="Number" />
           </div>
         </div>
         <div class="form-group">
-          <label>{{localize 'ADARKDEEP.items.ArmorAAC'}}</label>
+          <label>{{localize 'ADARKDEEP.items.MoveMod'}}</label>
           <div class="form-fields">
-            <input type="text" name="data.aac.value" value="{{data.aac.value}}" data-dtype="Number" />
+            <input type="text" name="data.move_mod" value="{{data.move_mod}}" data-dtype="Number" />
           </div>
         </div>
         <div class="form-group">
-          <label>{{localize 'ADARKDEEP.armor.type'}}</label>
+          <label>{{localize 'ADARKDEEP.items.Swim'}}</label>
           <div class="form-fields">
-            <select name="data.type">
-              {{#select data.type}}
-              <option value=""></option>
-              {{#each config.armor as |armor a|}}
-              <option value="{{a}}">{{armor}}</option>
-              {{/each}}
-              {{/select}}
-            </select>
+            <input type="text" name="data.swim" value="{{data.swim}}" />
           </div>
         </div>
+	{{/unless}}
         <div class="form-group">
           <label>{{localize 'ADARKDEEP.items.Cost'}}</label>
           <div class="form-fields">

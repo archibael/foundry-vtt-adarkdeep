@@ -28,33 +28,42 @@
           <div title="{{e.name}}" class="field-name flex2">
             {{e.name}}
           </div>
+{{#if (lte e.data.data.hp.value -1)}}
+<font color="red">
           <div class="field-long" title="{{localize 'ADARKDEEP.Health'}}">
             <i class="fas fa-heart"></i>
             {{e.data.data.hp.value}}/{{e.data.data.hp.max}}
           </div>
+</font>
+{{else}}
+          <div class="field-long" title="{{localize 'ADARKDEEP.Health'}}">
+            <i class="fas fa-heart"></i>
+            {{e.data.data.hp.value}}/{{e.data.data.hp.max}}
+          </div>
+{{/if}}
           <div class="field-short" title="{{localize 'ADARKDEEP.ArmorClass'}}">
             <i class="fas fa-shield-alt"></i>
             <strong>{{e.data.data.ac.value}}</strong> <sub>{{e.data.data.ac.naked}}</sub>
           </div>
         </div>
         <div class="flexrow field-row">
-          <div class="field-short" title="{{localize 'ADARKDEEP.Thac0'}}">
+          <div class="field-short" title="{{localize 'ADARKDEEP.HitWith20'}}">
             <i class="fas fa-crosshairs"></i>
-            {{e.data.data.thac0.value}}
+            {{subtractint e.data.data.achitby20.value 5}}
           </div>
           {{#if (eq e.data.type 'character')}}
           <div class="field-short" title="{{localize 'ADARKDEEP.Melee'}}">
             <i class="fas fa-fist-raised"></i>
-            {{add e.data.data.scores.str.mod e.data.data.thac0.mod.melee}}
+            {{add e.data.data.scores.str.tohit e.data.data.thac0.mod.melee}}
           </div>
           <div class="field-short" title="{{localize 'ADARKDEEP.Missile'}}">
             <i class="fas fa-bullseye"></i>
-            {{add e.data.data.scores.dex.mod e.data.data.thac0.mod.missile}}
+            {{add e.data.data.scores.dex.missile e.data.data.thac0.mod.missile}}
           </div>
           {{/if}}
           <div class="field-short flex2">
             <i class="fas fa-shoe-prints" title="{{localize 'ADARKDEEP.movement.base'}}"></i>
-            <span title="{{localize 'ADARKDEEP.movement.encounter.long'}}">{{e.data.data.movement.encounter}}</span> <sub
+            <span title="{{localize 'ADARKDEEP.movement.encounter.long'}}">{{divide (mult e.data.data.movement.base 3) 10}}</span> <sub
               title="{{localize 'ADARKDEEP.movement.exploration.long'}}">{{e.data.data.movement.base}}</sub>
           </div>
           {{#if (eq e.data.type 'character')}}

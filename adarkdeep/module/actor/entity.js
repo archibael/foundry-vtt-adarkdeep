@@ -21,12 +21,12 @@ export class OseActor extends Actor {
     if (game.settings.get("adarkdeep", "initiative") != "group") {
       data.initiative.value = data.initiative.mod;
       if (this.data.type == "character") {
-        data.initiative.value += data.scores.dex.mod;
+        data.initiative.value += data.scores.dex.init;
       }
     } else {
       data.initiative.value = 0;
     }
-    data.movement.encounter = Math.floor(data.movement.base / 3);
+    data.movement.encounter = Math.floor(data.movement.base * 3 / 10);
   }
 
   static async update(data, options = {}) {
@@ -664,28 +664,23 @@ export class OseActor extends Actor {
 
     // Compute AC
     let baseAc = 10;
-//    let baseAac = 10;
     let AcShield = 0;
-//    let AacShield = 0;
 
-//    data.aac.naked = baseAac + data.scores.dex.mod;
-    data.ac.naked = baseAc - data.scores.dex.mod;
+    data.ac.naked = baseAc + data.scores.dex.acadj;
     const armors = this.data.items.filter((i) => i.type == "armor");
     armors.forEach((a) => {
       const armorData = a.data.data;
       if (!armorData.equipped) return;
-      if (armorData.type == "shield") {
-        AcShield = armorData.ac.value;
-//        AacShield = armorData.aac.value;
+      if (armorData.isShield) {
+        AcShield = 1 + armorData.bonus;
         return
       }
-      baseAc = armorData.ac.value;
-//      baseAac = armorData.aac.value;
+      if (baseAc >= armorData.ac - armorData.bonus) {
+		baseAc = armorData.ac - armorData.bonus;
+	  }
     });
-//    data.aac.value = baseAac + data.scores.dex.mod + AacShield + data.aac.mod;
-    data.ac.value = baseAc - data.scores.dex.mod - AcShield - data.ac.mod;
+    data.ac.value = baseAc + data.scores.dex.acadj - AcShield - data.ac.mod;
     data.ac.shield = AcShield;
-//    data.aac.shield = AacShield;
   }
 
   computeModifiers() {
@@ -695,40 +690,483 @@ export class OseActor extends Actor {
     const data = this.data.data;
 
     const standard = {
-      0: -3,
+      0: -5,
+	  2: -4,
       3: -3,
       4: -2,
       6: -1,
-      9: 0,
+      8: 0,
       13: 1,
       16: 2,
       18: 3,
     };
+// define strength bonuses
+    const strtohit = {
+      0: -5,
+	  2: -4,
+      3: -3,
+      4: -2,
+      6: -1,
+      8: 0,
+	  17: 1,
+      19: 3,
+      21: 4,
+      23: 5,
+	  24: 6,
+	  25: 7,
+    };
+    const xstrtohit = {
+      0: 2,
+	  1: 0,
+      51: 1,
+    };
+    const strdmg = {
+      0: -2,
+	  3: -1,
+      6: 0,
+      16: 1,
+      18: 2,
+      19: 7,
+      20: 8,
+      21: 9,
+      22: 10,
+	  23: 11,
+	  24: 12,
+	  25: 14,
+    };
+    const xstrdmg = {
+      0: 4,
+	  1: 1,
+      76: 2,
+	  91: 3,
+    };
+    const strwt = {
+      0: -55,
+	  2: -45,
+	  3: -35,
+	  4: -25,
+      6: -15,
+	  8: 0,
+	  12: 10,
+	  14: 20,
+      16: 35,
+	  17: 50,
+      18: 75,
+      19: 450,
+      20: 500,
+      21: 600,
+      22: 750,
+	  23: 900,
+	  24: 1200,
+	  25: 1500,
+    };
+    const xstrwt = {
+      0: 225,
+	  1: 25,
+	  51: 50,
+      76: 75,
+	  91: 125,
+    };
+    const strstuckchance = {
+      0: 0,
+	  3: 1,
+	  8: 2,
+	  16: 3,
+      19: 7,
+	  21: 9,
+	  23: 11,
+	  25: 22,
+    };
+    const xstrstuck = {
+      0: 2,
+	  1: 0,
+	  51: 1,
+    };
+    const strstuckdie = {
+      0: 6,
+	  19: 8,
+	  21: 10,
+	  23: 12,
+      25: 24,
+    };
+    const strlockchance = {
+      0: 0,
+	  19: 3,
+	  21: 4,
+	  23: 5,
+      24: 7,
+	  25: 9,
+    };
+    const xstrlock = {
+      0: 2,
+	  1: 0,
+	  91: 1,
+    };
+    const strlockdie = {
+      0: 6,
+	  24: 8,
+	  25: 10,
+    };
+    const strbend = {
+      0: 0,
+	  8: 1,
+	  10: 2,
+	  12: 4,
+      14: 7,
+	  16: 10,
+	  17: 13,
+	  18: 16,
+      19: 50,
+	  20: 60,
+      21: 70,
+      22: 80,
+      23: 90,
+      24: 100,
+    };
+    const xstrbend = {
+      0: 24,
+	  1: 4,
+	  51: 9,
+      76: 14,
+	  91: 19,
+    };
+// compute strength bonuses
     data.scores.str.mod = OseActor._valueFromTable(
       standard,
       data.scores.str.value
     );
+    data.scores.str.tohit = (OseActor._valueFromTable(
+      strtohit,
+      data.scores.str.value
+    )) + ((data.scores.str.exenabled && (data.scores.str.value==18) ) ? OseActor._valueFromTable(
+      xstrtohit,
+      parseInt(data.scores.str.except)
+    ):0);
+    data.scores.str.dmg = (OseActor._valueFromTable(
+      strdmg,
+      data.scores.str.value
+    )) + ((data.scores.str.exenabled && (data.scores.str.value==18) ) ? OseActor._valueFromTable(
+      xstrdmg,
+      parseInt(data.scores.str.except)
+    ):0);
+    data.scores.str.weight = (OseActor._valueFromTable(
+      strwt,
+      data.scores.str.value
+    )) + ((data.scores.str.exenabled && (data.scores.str.value==18) ) ? OseActor._valueFromTable(
+      xstrwt,
+      parseInt(data.scores.str.except)
+    ):0);
+    data.scores.str.stuckdoorchance = (OseActor._valueFromTable(
+      strstuckchance,
+      data.scores.str.value
+    )) + ((data.scores.str.exenabled && (data.scores.str.value==18) ) ? OseActor._valueFromTable(
+      xstrstuck,
+      parseInt(data.scores.str.except)
+    ):0);
+    data.scores.str.stuckdoordie = (OseActor._valueFromTable(
+      strstuckdie,
+      data.scores.str.value
+    ));
+    data.scores.str.lockdoorchance = (OseActor._valueFromTable(
+      strlockchance,
+      data.scores.str.value
+    )) + ((data.scores.str.exenabled && (data.scores.str.value==18) ) ? OseActor._valueFromTable(
+      xstrlock,
+      parseInt(data.scores.str.except)
+    ):0);
+    data.scores.str.lockdoordie = (OseActor._valueFromTable(
+      strlockdie,
+      data.scores.str.value
+    ));
+    data.scores.str.barsgates = (OseActor._valueFromTable(
+      strbend,
+      data.scores.str.value
+    )) + ((data.scores.str.exenabled && (data.scores.str.value==18) ) ? OseActor._valueFromTable(
+      xstrbend,
+      parseInt(data.scores.str.except)
+    ):0);
+//define intelligence bonuses
+    const intlang = {
+      0: 0,
+	  8: 1,
+      10: 2,
+      12: 3,
+      14: 4,
+      16: 5,
+      17: 6,
+      18: 7,
+    };
+    const intillus = {
+      0: 0,
+	  19: 1,
+      20: 2,
+      21: 3,
+      22: 4,
+      23: 5,
+      24: 6,
+      25: 7,
+    };
+// compute intelligence bonuses
     data.scores.int.mod = OseActor._valueFromTable(
       standard,
       data.scores.int.value
     );
-    data.scores.dex.mod = OseActor._valueFromTable(
-      standard,
-      data.scores.dex.value
+    data.scores.int.maxlang = OseActor._valueFromTable(
+      intlang,
+      data.scores.int.value
     );
-    data.scores.cha.mod = OseActor._valueFromTable(
-      standard,
-      data.scores.cha.value
+    data.scores.int.illusimmunlvl = OseActor._valueFromTable(
+      intillus,
+      data.scores.int.value
     );
+//define wisdom bonuses
+    const wismind = {
+      0: -5,
+	  2: -4,
+      3: -3,
+      4: -2,
+      5: -1,
+      8: 0,
+      15: 1,
+      16: 2,
+	  17: 3,
+	  18: 4,
+    };
+    const wisfail = {
+      0: 100,
+	  9: 20,
+      10: 15,
+      11: 10,
+      12: 5,
+      13: 0,
+    };
+    const wisenchant = {
+      0: 0,
+	  19: 1,
+      20: 2,
+      21: 3,
+      22: 4,
+      23: 5,
+      24: 6,
+      25: 7,
+    };
+//compute wisdom bonuses
     data.scores.wis.mod = OseActor._valueFromTable(
       standard,
       data.scores.wis.value
     );
+    data.scores.wis.mindattackadj = OseActor._valueFromTable(
+      wismind,
+      data.scores.wis.value
+    );
+    data.scores.wis.spellfail = OseActor._valueFromTable(
+      wisfail,
+      data.scores.wis.value
+    );
+    data.scores.wis.enchantimmunlvl = OseActor._valueFromTable(
+      wisenchant,
+      data.scores.wis.value
+    );
+//define dexterity bonuses
+    const dexinit = {
+      0: 5,
+	  2: 4,
+      3: 3,
+      4: 2,
+      5: 1,
+      6: 0,
+      16: -1,
+      17: -2,
+	  18: -3,
+	  21: -4,
+	  24: -5,
+    };
+    const dexac = {
+      0: 6,
+	  2: 5,
+      3: 4,
+      4: 3,
+      5: 2,
+      6: 1,
+	  7: 0,
+      15: -1,
+	  16: -2,
+	  17: -3,
+	  18: -4,
+	  21: -5,
+	  24: -6,
+    };
+//compute dexterity bonuses	
+    data.scores.dex.mod = OseActor._valueFromTable(
+      standard,
+      data.scores.dex.value
+    );
+    data.scores.dex.init = OseActor._valueFromTable(
+      dexinit,
+      data.scores.dex.value
+    );
+    data.scores.dex.missile = 0 - OseActor._valueFromTable(
+      dexinit,
+      data.scores.dex.value
+    );
+    data.scores.dex.acadj = OseActor._valueFromTable(
+      dexac,
+      data.scores.dex.value
+    );
+//define constitution bonuses
+    const conhp = {
+      0: -4,
+	  2: -3,
+      3: -2,
+      4: -1,
+      7: 0,
+      15: 1,
+	  16: 2,
+      17: 3,
+	  18: 4,
+	  19: 5,
+	  21: 6,
+	  24: 7,
+    };
+    const conshock = {
+      0: 25,
+	  2: 30,
+      3: 35,
+      4: 40,
+      5: 45,
+      6: 50,
+	  7: 55,
+	  8: 60,
+	  9: 65,
+	  10: 70,
+	  11: 75,
+	  12: 80,
+	  13: 85,
+	  14: 88,
+	  15: 91,
+	  16: 95,
+	  17: 97,
+	  18: 99,
+    };
+    const conress = {
+      0: 30,
+	  2: 35,
+      3: 40,
+      4: 45,
+      5: 50,
+      6: 55,
+	  7: 60,
+	  8: 65,
+	  9: 70,
+	  10: 75,
+	  11: 80,
+	  12: 85,
+	  13: 90,
+	  14: 92,
+	  15: 94,
+	  16: 96,
+	  17: 98,
+	  18: 100,
+    };
+//compute constitution bonuses
     data.scores.con.mod = OseActor._valueFromTable(
       standard,
       data.scores.con.value
     );
-
+    data.scores.con.hpadj = (data.scores.con.limited && (data.scores.con.value>=16) ) ? 2: OseActor._valueFromTable(
+      conhp,
+      data.scores.con.value
+    );
+    data.scores.con.shock = OseActor._valueFromTable(
+      conshock,
+      data.scores.con.value
+    );
+    data.scores.con.ressur = OseActor._valueFromTable(
+      conress,
+      data.scores.con.value
+    );
+//declare charisma bonuses
+    const chahench = {
+      0: 0,
+      3: 1,
+      5: 2,
+      7: 3,
+      9: 4,
+	  12: 5,
+      14: 6,
+	  15: 7,
+	  16: 8,
+	  17: 10,
+	  18: 15,
+	  19: 20,
+	  20: 25,
+	  21: 30,
+	  22: 35,
+	  23: 40,
+	  24: 45,
+	  25: 50,
+    };
+    const chamorale = {
+      0: -8,
+	  2: -7,
+      3: -6,
+      4: -5,
+      5: -4,
+      6: -3,
+	  7: -2,
+	  8: -1,
+	  9: 0,
+	  14: 1,
+	  15: 3,
+	  16: 4,
+	  17: 6,
+	  18: 8,
+	  19: 10,
+	  20: 12,
+	  21: 14,
+	  22: 16,
+	  23: 18,
+	  24: 20,
+    };
+    const chareaction = {
+      0: -35,
+	  2: -30,
+      3: -25,
+      4: -20,
+      5: -15,
+      6: -10,
+	  7: -5,
+	  8: 0,
+	  13: 5,
+	  14: 10,
+	  15: 15,
+	  16: 25,
+	  17: 30,
+	  18: 35,
+	  19: 40,
+	  20: 45,
+	  21: 50,
+	  22: 55,
+	  23: 60,
+	  24: 65,
+	  25: 70,
+    };
+    data.scores.cha.mod = OseActor._valueFromTable(
+      standard,
+      data.scores.cha.value
+    );
+    data.scores.cha.henchmax = OseActor._valueFromTable(
+      chahench,
+      data.scores.cha.value
+    );
+    data.scores.cha.moraleadj = OseActor._valueFromTable(
+      chamorale,
+      data.scores.cha.value
+    );
+    data.scores.cha.reaction = OseActor._valueFromTable(
+      chareaction,
+      data.scores.cha.value
+    );
     const capped = {
       0: -2,
       3: -2,
@@ -739,10 +1177,10 @@ export class OseActor extends Actor {
       16: 1,
       18: 2,
     };
-    data.scores.dex.init = OseActor._valueFromTable(
-      capped,
-      data.scores.dex.value
-    );
+///    data.scores.dex.init = OseActor._valueFromTable(
+///      capped,
+///      data.scores.dex.value
+///    );
     data.scores.cha.npc = OseActor._valueFromTable(
       capped,
       data.scores.cha.value

@@ -14,7 +14,7 @@ export const registerHelpers = async function () {
     } else if (val < 0) {
       return `${val}`;
     } else {
-      return "0";
+      return "±0";
     }
   });
 
@@ -25,6 +25,10 @@ export const registerHelpers = async function () {
 
   Handlebars.registerHelper("subtract", function (lh, rh) {
     return parseInt(lh) - parseInt(rh);
+  });
+
+  Handlebars.registerHelper("subtractint", function (lh, rh) {
+    return lh - rh;
   });
 
   Handlebars.registerHelper("divide", function (lh, rh) {

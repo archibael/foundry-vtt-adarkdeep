@@ -206,5 +206,28 @@ export const ADARKDEEP = {
     P: -14,
     Q: -15,
     R: -16
+  },
+  magicresistance_cols: {
+  STD: 1,
+	A: 12,
+	B: 13,
+    C: 14,
+    D: 15,
+    E: 16,
+    F: 17,
+    G: 18,
+    H: 19,
+    I: 20,
+    J: 21,
+    K: 22,
+    L: 23,
+    M: 24,
+    N: 25,
+    O: 26,
+    P: 27,
+    Q: 28,
+    R: 29,
+	S: 30,
+	T: 31
   }
 };
