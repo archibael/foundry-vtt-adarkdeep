@@ -9,7 +9,15 @@
                 <div class="attribute-value">
                     <input name="data.scores.str.value" type="text" value="{{data.scores.str.value}}" placeholder="0"
                         data-dtype="Number" />
+				</div>
+{{#if data.scores.str.exenabled}}
+{{#if (eq data.scores.str.value 18)}}
+                <div class="attribute-value">
+                    <input name="data.scores.str.except" type="text" value="{{data.scores.str.except}}" placeholder="01"
+                        data-dtype="String" />
                 </div>
+{{/if}}
+{{/if}}
             </li>
             <li class="attribute ability-score" data-score="int">
                 <h4 class="attribute-name box-title" title="{{ localize 'ADARKDEEP.scores.int.long' }}">
@@ -236,8 +244,8 @@
             <li class="attribute saving-throw">
                 <h4 class="attribute-name box-title" title="{{ localize 'ADARKDEEP.saves.magic.long' }}">
                     {{ localize "ADARKDEEP.saves.magic.long"}}</h4>
-                <div class="attribute-value flat" title="{{localize 'ADARKDEEP.scores.wis.long'}}({{data.scores.wis.mod}})">
-                    {{mod data.scores.wis.mod}}
+                <div class="attribute-value flat" title="{{localize 'ADARKDEEP.scores.wis.long'}}({{data.scores.wis.mindattackadj}})">
+                    {{mod data.scores.wis.mindattackadj}}
                 </div>
             </li>
         </ul>

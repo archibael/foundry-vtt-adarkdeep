@@ -1,15 +1,72 @@
 <form autocomplete="off">
   <div class="form-group">
+    <label for="spellcaster">{{localize "ADARKDEEP.DualClass"}}</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.details.dualclass" id="dualclass" {{checked data.details.dualclass}}
+        data-dtype="Boolean" />
+    </div>
+  </div>  
+  <div class="form-group">
+    <label for="spellcaster">{{localize "ADARKDEEP.MultiClass"}}</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.details.multiclass" id="multiclass" {{checked data.details.multiclass}}
+        data-dtype="Boolean" />
+    </div>
+  </div>
+{{#if data.details.multiclass}}
+  <div class="form-group">
+    <label for="spellcaster">{{localize "ADARKDEEP.MultiClass3"}}</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.details.multiclass3" id="multiclass3" {{checked data.details.multiclass3}}
+        data-dtype="Boolean" />
+    </div>
+  </div>
+{{/if}}
+  <div class="form-group">
     <label for="spellcaster">{{localize "ADARKDEEP.Spellcaster"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="data.spells.enabled" id="spellcaster" {{checked data.spells.enabled}}
         data-dtype="Boolean" />
     </div>
   </div>
+{{#if data.details.multiclass}}
+  <div class="form-group">
+    <label for="spellcaster">{{localize "ADARKDEEP.Spellcaster"}} 2</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.spells2.enabled" id="spellcaster2" {{checked data.spells2.enabled}}
+        data-dtype="Boolean" />
+    </div>
+  </div>
+{{/if}}
+{{#if data.details.dualclass}}
+  <div class="form-group">
+    <label for="spellcaster">{{localize "ADARKDEEP.Spellcaster"}} 2</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.spells2.enabled" id="spellcaster2" {{checked data.spells2.enabled}}
+        data-dtype="Boolean" />
+    </div>
+  </div>
+{{/if}}
+{{#if data.details.multiclass3}}
+  <div class="form-group">
+    <label for="spellcaster">{{localize "ADARKDEEP.Spellcaster"}} 3</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.spells3.enabled" id="spellcaster3" {{checked data.spells3.enabled}}
+        data-dtype="Boolean" />
+    </div>
+  </div>
+{{/if}}
   <div class="form-group">
     <label for="retainer">{{localize "ADARKDEEP.Retainer"}}</label>
     <div class="form-fields">
       <input type="checkbox" name="data.retainer.enabled" id="retainer" {{checked data.retainer.enabled}}
+        data-dtype="Boolean" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="retainer">{{localize "ADARKDEEP.scores.str.except"}}</label>
+    <div class="form-fields">
+      <input type="checkbox" name="data.scores.str.exenabled" id="exceptstr" {{checked data.scores.str.exenabled}}
         data-dtype="Boolean" />
     </div>
   </div>
@@ -42,6 +99,75 @@
         data-dtype="Number" />
     </div>
   </div>
+{{#if data.details.dualclass}}
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.next"}} 2</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp2.next" id="experience2next" value="{{data.details.xp2.next}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.bonus"}} 2 (%)</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp2.bonus" id="experience2" value="{{data.details.xp2.bonus}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.share"}} 2 (%)</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp2.share" id="experience2-share" value="{{data.details.xp2.share}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+{{/if}}
+{{#if data.details.multiclass}}
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.next"}} 2</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp2.next" id="experience2next" value="{{data.details.xp2.next}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.bonus"}} 2 (%)</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp2.bonus" id="experience2" value="{{data.details.xp2.bonus}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.share"}} 2 (%)</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp2.share" id="experience2-share" value="{{data.details.xp2.share}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+{{/if}}
+{{#if data.details.multiclass3}}
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.next"}} 3</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp3.next" id="experience3next" value="{{data.details.xp3.next}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.bonus"}} 3 (%)</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp3.bonus" id="experience3" value="{{data.details.xp3.bonus}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "ADARKDEEP.details.experience.share"}} 3 (%)</label>
+    <div class="form-fields">
+      <input type="text" name="data.details.xp3.share" id="experience3-share" value="{{data.details.xp3.share}}"
+        data-dtype="Number" />
+    </div>
+  </div>
+{{/if}}
   <div class="form-group">
     <label>{{localize "ADARKDEEP.MeleeBonus"}}</label>
     <div class="form-fields">

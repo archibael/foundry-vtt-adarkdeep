@@ -29,6 +29,34 @@ export class OseActor extends Actor {
     data.movement.encounter = Math.floor(data.movement.base * 3 / 10);
   }
 
+  async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
+    const current = foundry.utils.getProperty(this.data.data, attribute);
+
+    // Determine the updates to make to the actor data
+    let updates;
+    if ( isBar ) {
+      if (isDelta) value = Math.clamped(-10, Number(current.value) + value, current.max);
+      updates = {[`data.${attribute}.value`]: value};
+    } else {
+      if ( isDelta ) value = Number(current) + value;
+      updates = {[`data.${attribute}`]: value};
+    }
+  
+    /**
+     * A hook event that fires when a token's resource bar attribute has been modified.
+     * @function modifyTokenAttribute
+     * @memberof hookEvents
+     * @param {object} data           An object describing the modification
+     * @param {string} data.attribute The attribute path
+     * @param {number} data.value     The target attribute value
+     * @param {boolean} data.isDelta  Whether the number represents a relative change (true) or an absolute change (false)
+     * @param {boolean} data.isBar    Whether the new value is part of an attribute bar, or just a direct value
+     * @param {objects} updates       The update delta that will be applied to the Token's actor
+     */
+    const allowed = Hooks.call("modifyTokenAttribute", {attribute, value, isDelta, isBar}, updates);
+    return allowed !== false ? this.update(updates) : this;
+  }
+  
   static async update(data, options = {}) {
     // Compute AAC from AC
     if (data.data?.ac?.value) {
@@ -183,6 +211,44 @@ export class OseActor extends Actor {
       chatMessage: options.chatMessage,
     });
   }
+  
+  rollMoraleResult(options = {}) {
+    const rollParts = ["1d20"];
+
+    const data = {
+      actor: this.data,
+      roll: {
+        type: "table",
+        table: {
+          1: game.i18n.format("ADARKDEEP.morale.FightingRetreat", {
+            name: this.data.name,
+          }),
+          4: game.i18n.format("ADARKDEEP.morale.GeneralRetreat", {
+            name: this.data.name,
+          }),
+          7: game.i18n.format("ADARKDEEP.morale.DisarrayRetreat", {
+            name: this.data.name,
+          }),
+          11: game.i18n.format("ADARKDEEP.morale.Surrender", {
+            name: this.data.name,
+          }),
+        },
+      },
+    };
+
+    let skip = options.event && options.event.ctrlKey;
+
+    // Roll and return
+    return OseDice.Roll({
+      event: options.event,
+      parts: rollParts,
+      data: data,
+      skipDialog: skip,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: game.i18n.localize("ADARKDEEP.reaction.check"),
+      title: game.i18n.localize("ADARKDEEP.reaction.check"),
+    });
+  }
 
   rollMorale(options = {}) {
     const rollParts = [`1d20+${this.data.data.details.morale}`];
@@ -195,12 +261,14 @@ export class OseActor extends Actor {
       },
     };
 
+    let skip = options.event && options.event.ctrlKey;
+
     // Roll and return
-    return OseDice.Roll({
+    return OseDice.Roll({	
       event: options.event,
       parts: rollParts,
       data: data,
-      skipDialog: true,
+      skipDialog: skip,
       speaker: ChatMessage.getSpeaker({ actor: this }),
       flavor: game.i18n.localize("ADARKDEEP.roll.morale"),
       title: game.i18n.localize("ADARKDEEP.roll.morale"),
@@ -278,6 +346,37 @@ export class OseActor extends Actor {
     });
   }
 
+  rollMRCheck(score, options = {}) {
+    const label = game.i18n.localize(`ADARKDEEP.magicresistance.long`);
+    const rollParts = ["1d100"];
+
+    const data = {
+      actor: this.data,
+      roll: {
+        type: "mrcheck",
+        target: this.data.data.details.magicresist0level*5,
+      },
+
+      details: game.i18n.format("ADARKDEEP.roll.details.attribute", {
+        score: label,
+      }),
+    };
+
+    let skip = options?.event?.ctrlKey || options.fastForward;
+
+    // Roll and return
+    return OseDice.Roll({
+      event: options.event,
+      parts: rollParts,
+      data: data,
+      skipDialog: skip,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: game.i18n.format("ADARKDEEP.roll.attribute", { attribute: label }),
+      title: game.i18n.format("ADARKDEEP.roll.attribute", { attribute: label }),
+      chatMessage: options.chatMessage,
+    });
+  }
+  
   rollCheck(score, options = {}) {
     const label = game.i18n.localize(`ADARKDEEP.scores.${score}.long`);
     const rollParts = ["1d20"];
@@ -666,7 +765,7 @@ export class OseActor extends Actor {
     let baseAc = 10;
     let AcShield = 0;
 
-    data.ac.naked = baseAc + data.scores.dex.acadj;
+    data.ac.naked = (baseAc + data.scores.dex.acadj)>10?10:(baseAc + data.scores.dex.acadj);
     const armors = this.data.items.filter((i) => i.type == "armor");
     armors.forEach((a) => {
       const armorData = a.data.data;
@@ -680,6 +779,12 @@ export class OseActor extends Actor {
 	  }
     });
     data.ac.value = baseAc + data.scores.dex.acadj - AcShield - data.ac.mod;
+	if (data.ac.value > 10) {
+		data.ac.value = 10
+	}
+	if (data.ac.value < -10) {
+		data.ac.value = -10
+	}
     data.ac.shield = AcShield;
   }
 

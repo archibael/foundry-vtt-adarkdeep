@@ -11,7 +11,7 @@ export class OseDice {
   } = {}) {
 
     const template = "systems/adarkdeep/templates/chat/roll-result.html";
-
+      
     let chatData = {
       user: game.user.id,
       speaker: speaker,
@@ -25,7 +25,12 @@ export class OseDice {
 
     // Optionally include a situational bonus
     if (form !== null && form.bonus.value) {
-      parts.push(form.bonus.value);
+		if (data.roll.type == "mrcheck") {
+			data.roll.target = (data.actor.data.details.magicresist0level - parseInt(form.bonus.value)) * 5;
+			data.roll.type = "below";
+        } else {
+			parts.push(form.bonus.value);
+		}
     }
 
     //;
@@ -47,7 +52,7 @@ export class OseDice {
       chatData["blind"] = true;
       data.roll.blindroll = true;
     }
-
+	
     templateData.result = OseDice.digestResult(data, roll);
   if (data.item) {
 	if (data.item.type=="skill") {

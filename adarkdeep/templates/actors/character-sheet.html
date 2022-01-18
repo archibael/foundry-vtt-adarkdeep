@@ -20,6 +20,16 @@
       {{localize "ADARKDEEP.category.spells"}}
     </a>
     {{/if}}
+    {{#if data.spells2.enabled}}
+    <a class="item" data-tab="spells2">
+      {{localize "ADARKDEEP.category.spells"}}2
+    </a>
+    {{/if}}
+    {{#if data.spells3.enabled}}
+    <a class="item" data-tab="spells3">
+      {{localize "ADARKDEEP.category.spells"}}3
+    </a>
+    {{/if}}
     <a class="item" data-tab="inventory">
       {{localize "ADARKDEEP.category.inventory"}}
     </a>
@@ -41,6 +51,16 @@
     </div>
     {{#if data.spells.enabled}}
     <div class="tab" data-group="primary" data-tab="spells">
+      {{> "systems/adarkdeep/templates/actors/partials/character-spells-tab.html"}}
+    </div>
+    {{/if}}
+    {{#if data.spells2.enabled}}
+    <div class="tab" data-group="primary" data-tab="spells2">
+      {{> "systems/adarkdeep/templates/actors/partials/character-spells-tab.html"}}
+    </div>
+    {{/if}}
+    {{#if data.spells3.enabled}}
+    <div class="tab" data-group="primary" data-tab="spells3">
       {{> "systems/adarkdeep/templates/actors/partials/character-spells-tab.html"}}
     </div>
     {{/if}}

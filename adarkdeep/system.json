@@ -2,7 +2,7 @@
   "name": "adarkdeep",
   "title": "Adventures Dark and Deep",
   "description": "BRW Games' interpretation of the world's most popular RPG as it might have been in a second edition had the original creator stayed at the helm of the company.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "minimumCoreVersion": "0.8.9",
   "compatibleCoreVersion": "9.238",
   "templateVersion": 2,
@@ -14,6 +14,24 @@
       "name": "Skills",
       "label": "ADD Skills",
       "path": "packs/add-skills.db",
+      "entity": "Item"
+    },
+    {
+      "name": "Class Abilities",
+      "label": "ADD Class Abilities",
+      "path": "packs/add-class-abilities.db",
+      "entity": "Item"
+    },
+    {
+      "name": "Racial Abilities",
+      "label": "ADD Racial Abilities",
+      "path": "packs/add-race-abilities.db",
+      "entity": "Item"
+    },
+    {
+      "name": "Items",
+      "label": "ADD Items",
+      "path": "packs/add-items.db",
       "entity": "Item"
     }
   ],

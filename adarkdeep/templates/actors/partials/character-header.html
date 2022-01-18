@@ -22,8 +22,8 @@
     </li>
     {{else}}
     <li>
-      <input type="text" name="data.details.title" value="{{data.details.title}}" data-dtype="String" />
-      <label>{{localize 'ADARKDEEP.details.title'}}</label>
+      <input type="text" name="data.details.race" value="{{data.details.race}}" data-dtype="String" />
+      <label>{{localize 'ADARKDEEP.details.race'}}</label>
     </li>
     {{/if}}
     <li>
@@ -48,4 +48,61 @@
       {{/if}}
     </li>
   </ul>
+{{#if data.details.multiclass}}
+  <ul class="summary flexrow">
+    <li class="flex3">
+      <input type="text" name="data.details.class2" value="{{data.details.class2}}" data-dtype="String" />
+      <label>{{localize 'ADARKDEEP.details.class'}} 2</label>
+    </li>
+    <li class="{{#if (gt data.details.xp2.value data.details.xp2.next)}}notify{{/if}}">
+      <input type="text" name="data.details.level2" value="{{data.details.level2}}" data-dtype="Number" />
+      <label>{{localize 'ADARKDEEP.details.level'}} 2</label>
+    </li>
+    <li class="flex2">
+      <input type="text" name="data.details.xp2.value" value="{{data.details.xp2.value}}" data-dtype="Number" />
+      <label>{{localize 'ADARKDEEP.details.experience.base'}} 2</label>
+      {{#if data.details.xp2.bonus}}
+      <span class="xp-bonus">+{{data.details.xp2.bonus}}%</span>
+      {{/if}}
+    </li>
+  </ul>
+{{/if}}
+{{#if data.details.dualclass}}
+  <ul class="summary flexrow">
+    <li class="flex3">
+      <input type="text" name="data.details.class2" value="{{data.details.class2}}" data-dtype="String" />
+      <label>{{localize 'ADARKDEEP.details.class'}} 2</label>
+    </li>
+    <li class="{{#if (gt data.details.xp2.value data.details.xp2.next)}}notify{{/if}}">
+      <input type="text" name="data.details.level2" value="{{data.details.level2}}" data-dtype="Number" />
+      <label>{{localize 'ADARKDEEP.details.level'}} 2</label>
+    </li>
+    <li class="flex2">
+      <input type="text" name="data.details.xp2.value" value="{{data.details.xp2.value}}" data-dtype="Number" />
+      <label>{{localize 'ADARKDEEP.details.experience.base'}} 2</label>
+      {{#if data.details.xp2.bonus}}
+      <span class="xp-bonus">+{{data.details.xp2.bonus}}%</span>
+      {{/if}}
+    </li>
+  </ul>
+{{/if}}
+{{#if data.details.multiclass3}}
+  <ul class="summary flexrow">
+    <li class="flex3">
+      <input type="text" name="data.details.class3" value="{{data.details.class3}}" data-dtype="String" />
+      <label>{{localize 'ADARKDEEP.details.class'}} 3</label>
+    </li>
+    <li class="{{#if (gt data.details.xp3.value data.details.xp3.next)}}notify{{/if}}">
+      <input type="text" name="data.details.level3" value="{{data.details.level3}}" data-dtype="Number" />
+      <label>{{localize 'ADARKDEEP.details.level'}} 3</label>
+    </li>
+    <li class="flex2">
+      <input type="text" name="data.details.xp3.value" value="{{data.details.xp3.value}}" data-dtype="Number" />
+      <label>{{localize 'ADARKDEEP.details.experience.base'}} 3</label>
+      {{#if data.details.xp3.bonus}}
+      <span class="xp-bonus">+{{data.details.xp3.bonus}}%</span>
+      {{/if}}
+    </li>
+  </ul>
+{{/if}}
 </section>

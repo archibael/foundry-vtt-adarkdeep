@@ -35,6 +35,10 @@ export const registerHelpers = async function () {
     return Math.floor(parseFloat(lh) / parseFloat(rh));
   });
 
+  Handlebars.registerHelper("truedivide", function (lh, rh) {
+    return parseFloat(lh) / parseFloat(rh);
+  });
+
   Handlebars.registerHelper("mult", function (lh, rh) {
     return Math.round(100 * parseFloat(lh) * parseFloat(rh)) / 100;
   });

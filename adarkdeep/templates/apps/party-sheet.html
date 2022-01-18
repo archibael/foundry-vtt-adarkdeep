@@ -28,19 +28,28 @@
           <div title="{{e.name}}" class="field-name flex2">
             {{e.name}}
           </div>
-{{#if (lte e.data.data.hp.value -1)}}
-<font color="red">
-          <div class="field-long" title="{{localize 'ADARKDEEP.Health'}}">
+          <div class="field-long" title="{{localize 'ADARKDEEP.Health'}}"
+		  {{#if (lte e.data.data.hp.value -1)}}
+			style="background-color:red;color:white" 
+		  {{else}}
+			{{#if (lte (truedivide e.data.data.hp.value e.data.data.hp.max) 0.25)}}
+			style="background-color:darkred;color:white"
+			{{else}}
+              {{#if (lte (truedivide e.data.data.hp.value e.data.data.hp.max) 0.5)}}
+			    style="background-color:darkorange"
+			  {{else}}
+                {{#if (lte (truedivide e.data.data.hp.value e.data.data.hp.max) 0.75)}}
+  			      style="background-color:goldenrod"
+			    {{else}}
+		          style="background-color:chartreuse"
+			    {{/if}}			  
+		      {{/if}}
+			{{/if}}
+		  {{/if}}>
             <i class="fas fa-heart"></i>
             {{e.data.data.hp.value}}/{{e.data.data.hp.max}}
           </div>
-</font>
-{{else}}
-          <div class="field-long" title="{{localize 'ADARKDEEP.Health'}}">
-            <i class="fas fa-heart"></i>
-            {{e.data.data.hp.value}}/{{e.data.data.hp.max}}
-          </div>
-{{/if}}
+</background-color>
           <div class="field-short" title="{{localize 'ADARKDEEP.ArmorClass'}}">
             <i class="fas fa-shield-alt"></i>
             <strong>{{e.data.data.ac.value}}</strong> <sub>{{e.data.data.ac.naked}}</sub>
@@ -79,7 +88,7 @@
             <span title="{{lookup @root.config.saves_long i}}">{{lookup @root.config.saves_short i}} {{s.value}}</span>
             {{/each}}
             {{#if (eq e.data.type 'character')}}<span><i class="fas fa-magic"
-                title="{{localize 'ADARKDEEP.saves.magic.long'}}"></i>{{mod e.data.data.scores.wis.mod}}</span>{{/if}}
+                title="{{localize 'ADARKDEEP.saves.magic.long'}}"></i>{{mod e.data.data.scores.wis.mindattackadj}}</span>{{/if}}
           </div>
         </div>
       </div>

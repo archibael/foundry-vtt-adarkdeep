@@ -100,6 +100,13 @@ export class OseActorSheet extends ActorSheet {
       actorObject.rollSave(save, { event: ev });
     });
 
+    html.find(".mr .attribute-name a").click((ev) => {
+      let actorObject = this.actor;
+      let element = ev.currentTarget;
+      let save = element.parentElement.parentElement.dataset.save;
+      actorObject.rollMRCheck(save, { event: ev });
+    });
+
     html.find(".item .item-rollable .item-image").click(async (ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));

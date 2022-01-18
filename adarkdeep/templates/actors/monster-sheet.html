@@ -39,6 +39,16 @@
       {{> "systems/adarkdeep/templates/actors/partials/character-spells-tab.html"}}
     </div>
     {{/if}}
+    {{#if data.spells2.enabled}}
+    <div class="tab" data-group="primary" data-tab="spells">
+      {{> "systems/adarkdeep/templates/actors/partials/character-spells2-tab.html"}}
+    </div>
+    {{/if}}
+    {{#if data.spells3.enabled}}
+    <div class="tab" data-group="primary" data-tab="spells">
+      {{> "systems/adarkdeep/templates/actors/partials/character-spells3-tab.html"}}
+    </div>
+    {{/if}}
     <div class="tab" data-group="primary" data-tab="notes">
       <div class="inventory">
         <div class="item-titles">{{localize "ADARKDEEP.category.notes"}}</div>

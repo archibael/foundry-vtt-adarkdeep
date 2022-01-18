@@ -97,7 +97,7 @@
   height: 18px;
   z-index: -1;
 }
-/* parchment compied to assets until I figure out how to call the FVTT built-in assets  from here */
+/* parchment copied to assets until I figure out how to call the FVTT built-in assets  from here */
 .adarkdeep.sheet.actor .sheet-tabs .item {
   padding: 1px 10px 0;
   margin-left: -5px;
@@ -119,7 +119,7 @@
   margin-bottom: -1px;
 }
 .adarkdeep.sheet.actor .sheet-body {
-  height: calc(100% - 140px);
+  height: calc(100% - 200px);
 }
 .adarkdeep.sheet.actor .sheet-body .tab {
   height: 100%;

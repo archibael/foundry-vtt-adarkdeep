@@ -223,6 +223,20 @@
                         <input name="data.saves.spell.value" type="text" value="{{data.saves.spell.value}}"
                             placeholder="0" />
                 </li>
+                <li class="attribute mr" data-save="mr">
+                    <h4 class="attribute-name box-title">
+                        <a>{{ localize "ADARKDEEP.magicresistance.short" }}</a>
+                    </h4>
+                   <div class="attribute-value">
+						<select name="data.details.magicresist0level" data-dtype="Number">
+							{{#select data.details.magicresist0level}}
+							{{#each config.magicresistance_cols as |t a|}}
+								<option value="{{t}}">{{a}}</option>
+							{{/each}}
+							{{/select}}
+						</select> 
+                    </div>
+                </li>
             </ul>
         </div>
     </section>

@@ -9,8 +9,14 @@
         <input type="text" name="formula" value="{{formula}}" disabled />
     </div>
     <div class="form-group">
+{{#if (eq data.roll.type "mrcheck") }}
+		<label>{{localize "ADARKDEEP.CasterLevel"}}</label>
+        <input type="text" name="bonus" value="" placeholder="1" />
+
+{{else}}
         <label>{{localize "ADARKDEEP.SitMod"}}</label>
         <input type="text" name="bonus" value="" placeholder="{{localize 'ADARKDEEP.RollExample'}}" />
+{{/if}}
     </div>
     <div class="form-group">
         <label>{{localize "ADARKDEEP.RollMode"}}</label>

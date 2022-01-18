@@ -26,6 +26,25 @@ export class OseItem extends Item {
 
   prepareData() {
     super.prepareData();
+    const data = this.data.data;
+
+    // Compute modifiers from actor scores
+//    this.computeModifiers();
+//    this._isSlow();
+//    this.computeAC();
+//    this.computeEncumbrance();
+//    this.computeTreasure();
+
+    // Determine Initiative
+//    if (game.settings.get("adarkdeep", "initiative") != "group") {
+//      data.initiative.value = data.initiative.mod;
+//      if (this.data.type == "character") {
+//        data.initiative.value += data.scores.dex.init;
+//      }
+//    } else {
+//      data.initiative.value = 0;
+//    }
+//    data.movement.encounter = Math.floor(data.movement.base * 3 / 10);
   }
 
   static chatListeners(html) {

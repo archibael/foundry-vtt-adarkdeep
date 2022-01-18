@@ -169,6 +169,11 @@
       "details": {
         "biography": "",
         "notes": "",
+		"dualclass" : false,
+		"multiclass" : false,
+		"multiclass3" : false,
+		"morale" : 0,
+		"race" : "",
         "class": "",
 		"class2": "",
 		"class3": "",
@@ -207,49 +212,27 @@
           "value": 10,
 		  "except": "01",
 		  "exenabled": false,
-		  "tohit": 0,
-		  "dmg": 0,
-		  "weight": 0,
-		  "stuckdoorchance": 1,
-		  "stuckdoordie": 6,
-		  "lockdoorchance": 0,
-		  "lockdoordie": 6,
-		  "barsgates": 0,
           "bonus": 0
         },
         "int": {
           "value": 10,
-		  "maxlang": 0,
-		  "illusimmunlvl": 0,
           "bonus": 0
         },
         "wis": {
           "value": 10,
-		  "mindattackadj": 0,
-		  "spellfail": 0,
-		  "enchantimmunlvl": 0,
           "bonus": 0
         },
         "dex": {
           "value": 10,
-		  "init": 0,
-		  "missile": 0,
-		  "acadj": 0,
           "bonus": 0
         },
         "con": {
           "value": 10,
 		  "limited": true,
-		  "hpadj": 0,
-		  "shock": 0,
-		  "ressur": 0,
           "bonus": 0
         },
         "cha": {
           "value": 10,
-		  "henchmax": 0,
-		  "moraleadj": 0,
-		  "reaction": 0,
           "bonus": 0
         }
       },
