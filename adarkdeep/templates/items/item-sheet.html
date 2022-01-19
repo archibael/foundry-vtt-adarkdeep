@@ -39,6 +39,7 @@
         {{editor content=data.description target="data.description" button=true
         owner=owner editable=editable}}
       </div>
-    </div>
+	 </div>
   </section>
+   	  {{#if data.cr}}<section><span style="color:gray;font-size:smaller">{{data.cr_msg}}</span></section>{{/if}}
 </form>

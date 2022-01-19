@@ -273,7 +273,14 @@
   },
   "Item": {
     "types": ["item", "weapon", "armor", "spell", "ability", "container","skill"],
+    "templates": {
+      "common": {
+		  "cr" : false,
+		  "cr_msg" : ""
+	  }
+	},
     "item": {
+      "templates": ["common"],
       "description": "",
       "quantity": {
         "value": 1,
@@ -286,11 +293,13 @@
       "isContainer": false
     },
     "container": {
+      "templates": ["common"],
       "description": "",
       "cost": 0,
       "weight": 0
     },
     "weapon": {
+      "templates": ["common"],
       "range": {
         "short": 0,
         "medium": 0,
@@ -315,6 +324,7 @@
       "containerId": ""
     },
     "armor": {
+      "templates": ["common"],
       "description": "",
       "ac": 10,
       "move_mod": "1.00",
@@ -327,6 +337,7 @@
       "containerId": ""
     },
     "spell": {
+      "templates": ["common"],
       "lvl": 1,
       "class": "Magic-User",
       "duration": "",
@@ -338,6 +349,7 @@
       "save": ""
     },
     "ability": {
+      "templates": ["common"],
       "pattern": "white",
       "requirements": "",
       "roll": "",
@@ -348,6 +360,7 @@
       "save": ""
     },
     "skill": {
+      "templates": ["common"],
       "pattern": "white",
 	  "xpcost": "",
 	  "avail_specialties": "",
