@@ -196,21 +196,21 @@ export class OseDice {
       : 0;
     result.victim = data.roll.target ? data.roll.target.data.name : null;
 
-    if (game.settings.get("adarkdeep", "ascendingAC")) {
-      if ((roll.terms[0] != 20 && (roll.total < targetAac) || roll.terms[0] == 1)) {
-        result.details = game.i18n.format(
-          "ADARKDEEP.messages.AttackAscendingFailure",
-          {
-            bonus: result.target,
-          }
-        );
-        return result;
-      }
-      result.details = game.i18n.format("ADARKDEEP.messages.AttackAscendingSuccess", {
-        result: roll.total,
-      });
-      result.isSuccess = true;
-    } else {
+//    if (game.settings.get("adarkdeep", "ascendingAC")) {
+//      if ((roll.terms[0] != 20 && (roll.total < targetAac) || roll.terms[0] == 1)) {
+//        result.details = game.i18n.format(
+//          "ADARKDEEP.messages.AttackAscendingFailure",
+//          {
+//            bonus: result.target,
+//          }
+//        );
+//        return result;
+//      }
+//      result.details = game.i18n.format("ADARKDEEP.messages.AttackAscendingSuccess", {
+//        result: roll.total,
+//      });
+//      result.isSuccess = true;
+//    } else {
       if (!this.attackIsSuccess(roll, result.target, targetAc)) {
         result.details = game.i18n.format("ADARKDEEP.messages.AttackFailure", {
           bonus: targetAc,
@@ -229,7 +229,7 @@ export class OseDice {
         result: value,
         bonus: targetAc,
       });
-    }
+//    }
     return result;
   }
 

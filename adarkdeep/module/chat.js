@@ -45,6 +45,17 @@ export const addChatMessageButtons = function(msg, html, data) {
       applyChatCardDamage(roll, 1);
     })
   }
+  let otherrollidx1 = msg.data.content.search("data-save");
+//  let otherroll = html.find('.card-buttons');
+  if (otherrollidx1 > 0) {
+    let otherrollidx2 = msg.data.content.indexOf('"',otherrollidx1+11);
+    let value = msg.data.content.substring(otherrollidx1+11,otherrollidx2);
+//    otherroll.append($(`<div class="dice-damage"><button type="button" data-action="apply-damage"><i class="fas fa-tint"></i></button></div>`))
+    html.find('button[data-action="save"]').click((ev) => {
+      ev.preventDefault();
+      rollSaveResponse(value);
+    })
+  }
 }
 
 /**
@@ -64,3 +75,11 @@ function applyChatCardDamage(roll, multiplier) {
 }
 
 /* -------------------------------------------- */
+
+function rollSaveResponse(roll) {
+//  const amount = roll.find('.data-save').last().text();
+  return Promise.all(canvas.tokens.controlled.map(t => {
+    const a = t.actor;
+    return a.rollSave(roll,{});
+  }));
+}

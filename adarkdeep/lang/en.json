@@ -68,7 +68,8 @@
   "ADARKDEEP.details.treasureTableHint": "Drop a rollable table here to roll the monster treasure",
   "ADARKDEEP.details.morale": "Morale",
   "ADARKDEEP.details.reaction": "Reaction",
-  "ADARKDEEP.details.appearing": "NA",
+  "ADARKDEEP.details.appearing": "# Appear",
+  "ADARKDEEP.details.appearlair": "# in Lair",
 
   "ADARKDEEP.Attack": "Attack",
   "ADARKDEEP.Encumbrance": "Encumbrance",

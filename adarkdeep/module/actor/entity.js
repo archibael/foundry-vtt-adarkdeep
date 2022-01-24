@@ -16,6 +16,7 @@ export class OseActor extends Actor {
     this.computeAC();
     this.computeEncumbrance();
     this.computeTreasure();
+	this.computeExperienceReward();
 
     // Determine Initiative
     if (game.settings.get("adarkdeep", "initiative") != "group") {
@@ -560,7 +561,8 @@ export class OseActor extends Actor {
       dmgParts.push(attData.item.data.damage);
     }
 
-    let ascending = game.settings.get("adarkdeep", "ascendingAC");
+//    let ascending = game.settings.get("adarkdeep", "ascendingAC");
+	let ascending = false;
     if (ascending) {
       rollParts.push(data.thac0.bba.toString());
     }
@@ -593,6 +595,7 @@ export class OseActor extends Actor {
         dmg: dmgParts,
         save: attData.roll.save,
         target: attData.roll.target,
+		description: attData.item.data.description,
       },
     };
 
@@ -753,6 +756,17 @@ export class OseActor extends Actor {
       total += item.data.data.quantity.value * item.data.data.cost;
     });
     data.treasure = Math.round(total * 100) / 100.0;
+  }
+
+  computeExperienceReward() {
+    if (this.data.type != "monster") {
+      return;
+    }
+    const data = this.data.data;
+    // Compute treasure
+    let total = 0;
+    let experienceCalc = data.details.xp.compbase + data.details.xp.comphpmult*data.hp.max;
+    data.details.xp.value = experienceCalc;
   }
 
   computeAC() {
