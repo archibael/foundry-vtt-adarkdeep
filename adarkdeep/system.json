@@ -49,6 +49,6 @@
   "primaryTokenAttribute": "hp",
   "secondaryTokenAttribute": null,
   "url": "https://github.com/archibael/foundry-vtt-adarkdeep/tree/main/adarkdeep",
-  "manifest": "https://github.com/archibael/foundry-vtt-adarkdeep/tree/main/adarkdeep/system.json",
-  "download": "https://github.com/archibael/foundry-vtt-adarkdeep/tree/main/adarkdeep/download/adarkdeep.zip"
+  "manifest": "https://github.com/archibael/foundry-vtt-adarkdeep/releases/download/v0.1.1-beta/system.json",
+  "download": "https://github.com/archibael/foundry-vtt-adarkdeep/releases/download/v0.1.1-beta/adarkdeep.zip"
 }
