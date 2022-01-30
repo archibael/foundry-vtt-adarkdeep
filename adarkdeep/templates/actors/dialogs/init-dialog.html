@@ -1,0 +1,63 @@
+<form autocomplete="off">
+  <div class="form-group">
+    <label>Select Action For This Round:</label>
+<div class="form-fields">
+  <input type="radio" id="attack-melee" name="initDecide" value="attack-melee"
+         checked>
+  <label for="attack-melee">Melee Attack (default: weapon in hand; override?)</label>  <input type="text" id="weapon" name="initWeaponSpeed" value="">
+</div>
+<div class="form-fields">
+  <input type="radio" id="attack-hth" name="initDecide" value="attack-hth">
+  <label for="attack-hth">Hand to Hand / Natural Attack</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="attack-missile" name="initDecide" value="attack-missile">
+  <label for="attack-missile">Missile Attack</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="charge" name="initDecide" value="charge">
+  <label for="charge">Charge and Attack</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="close" name="initDecide" value="close">
+  <label for="close">Close to Melee</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="defend" name="initDecide" value="defend">
+  <label for="defend">Defend</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="disengage" name="initDecide" value="disengage">
+  <label for="disengage">Disengage</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="magic" name="initDecide" value="magic">
+  <label for="magic">Cast Spell (include casting time:)</label><input type="text" name="castTime" value="">
+</div>
+<div class="form-fields">
+  <input type="radio" id="device" name="initDecide" value="device">
+  <label for="device">Use Item (specify type:)</label>
+  <input type="radio" id="wand" name="initDevice" value="wand"><label for="wand">wand</label>
+  <input type="radio" id="staff" name="initDevice" value="staff"><label for="staff">staff</label>
+  <input type="radio" id="rod" name="initDevice" value="rod"><label for="rod">rod</label>
+  <input type="radio" id="potion" name="initDevice" value="potion"><label for="potion">potion</label>
+  <input type="radio" id="rod" name="initDevice" value="scroll"><label for="scroll">scroll</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="maneuver" name="initDecide" value="maneuver">
+  <label for="maneuver">Maneuver</label>
+</div>
+<div class="form-fields">
+  <input type="radio" id="other" name="initDecide" value="other">
+  <label for="other">Other (specify init modifier:)</label><input type="text" name="otherTime" value="">
+</div>
+<div class="form-fields">
+  <label>Miscellaneous Modifiers:</label>  <input type="text" id="misc" name="miscInitMods" value="0">
+</div>
+  </div>
+  <footer class="sheet-footer">
+    <button type="submit">
+      <i class="fas fa-save"></i>Roll Initiative</button>
+  </footer>
+</form>
+

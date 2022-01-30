@@ -191,9 +191,9 @@ export class OseDice {
     const targetAc = data.roll.target
       ? data.roll.target.actor.data.data.ac.value
       : 10;
-    const targetAac = data.roll.target
-      ? data.roll.target.actor.data.data.aac.value
-      : 0;
+//    const targetAac = data.roll.target
+//      ? data.roll.target.actor.data.data.aac.value
+//      : 0;
     result.victim = data.roll.target ? data.roll.target.data.name : null;
 
 //    if (game.settings.get("adarkdeep", "ascendingAC")) {
@@ -211,13 +211,6 @@ export class OseDice {
 //      });
 //      result.isSuccess = true;
 //    } else {
-      if (!this.attackIsSuccess(roll, result.target, targetAc)) {
-        result.details = game.i18n.format("ADARKDEEP.messages.AttackFailure", {
-          bonus: targetAc,
-        });
-        return result;
-      }
-      result.isSuccess = true;
 	  let achit;
 	  if (roll.total < 20) {
 		achit = ((20-roll.total)+result.target)
@@ -225,7 +218,29 @@ export class OseDice {
 		achit = (20-roll.total)+(result.target-5)
   	  }
       let value = Math.clamped(achit, -10, 10);
-      result.details = game.i18n.format("ADARKDEEP.messages.AttackSuccess", {
+      if (!this.attackIsSuccess(roll, result.target, targetAc)) {
+		if (achit > value) {
+		let newval = achit-value;
+        result.details = game.i18n.format("ADARKDEEP.messages.AttackNoTargetFailure", {
+		  result: newval,
+          bonus: targetAc,			
+		})
+		} else {
+        result.details = game.i18n.format("ADARKDEEP.messages.AttackFailure", {
+		  result: value,
+          bonus: targetAc,
+        })};
+        return result;
+      };
+      result.isSuccess = true;
+	  if (result.victim) {
+        result.details = game.i18n.format("ADARKDEEP.messages.AttackSuccess", {
+		  result: value,
+          bonus: targetAc,
+        });
+        return result;
+      }
+      result.details = game.i18n.format("ADARKDEEP.messages.AttackNoTargetSuccess", {
         result: value,
         bonus: targetAc,
       });

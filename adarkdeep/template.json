@@ -173,6 +173,7 @@
 		"multiclass" : false,
 		"multiclass3" : false,
 		"morale" : 0,
+		"nonprofpenalty" : 0,
 		"race" : "",
         "class": "",
 		"class2": "",
@@ -189,13 +190,13 @@
           "bonus": 0
         },
         "xp2": {
-          "share": 100,
+          "share": 0,
           "next": 2000,
           "value": 0,
           "bonus": 0
         },
         "xp3": {
-          "share": 100,
+          "share": 0,
           "next": 2000,
           "value": 0,
           "bonus": 0
@@ -318,6 +319,8 @@
       "melee": true,
       "cost": 0,
       "equipped": false,
+	  "proficient" : true,
+	  "inhand" : false,
       "weight": 0,
       "counter": {
         "value": 0,

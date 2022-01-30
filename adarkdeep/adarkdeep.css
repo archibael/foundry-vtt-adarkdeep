@@ -87,6 +87,10 @@
   font-weight: bold;
   animation: 0.8s ease-in 1s infinite alternate notify;
 }
+/* tab padding fix */
+.adarkdeep.sheet nav{
+  padding: 0;
+}
 .adarkdeep.sheet.actor .sheet-tabs {
   position: absolute;
   transform: rotate(90deg);
@@ -104,6 +108,19 @@
   text-indent: 4px;
   line-height: 16px;
   background: url("assets/parchment.jpg");
+  border-top-right-radius: 4px;
+  border-top-left-radius: 80px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.9);
+  font-size: 12px;
+  filter: brightness(0.9);
+}
+.adarkdeep.sheet.actor.character .sheet-tabs .item {
+  padding: 1px 10px 0;
+  margin-left: -5px;
+  text-indent: 4px;
+  line-height: 16px;
+  background: gold;
   border-top-right-radius: 4px;
   border-top-left-radius: 80px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
@@ -910,6 +927,7 @@
 }
 .adarkdeep.sheet.actor.character .sheet-header {
   position: relative;
+  background: gold;
 }
 .adarkdeep.sheet.actor.character .sheet-header .xp-bonus {
   top: -15px;
@@ -937,6 +955,7 @@
 }
 .adarkdeep.sheet.actor.character .sheet-body .tab {
   height: 100%;
+  background: gold;
 }
 .adarkdeep.sheet.actor.character .sheet-body .attributes-tab {
   justify-content: space-between;
@@ -1110,7 +1129,9 @@
 .adarkdeep.sheet.actor.character .encumbrance.encumbered .arrow-down {
   border-top: 4px solid rgba(0, 0, 0, 0.9);
 }
-
+.adarkdeep.sheet.actor.character .window-content {
+  background: gold;
+}
 .adarkdeep .window-content .collapsed {
   display: none;
 }

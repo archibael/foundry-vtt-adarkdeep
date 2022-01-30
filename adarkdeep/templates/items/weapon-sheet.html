@@ -148,6 +148,32 @@
               />
           </div>
         </div>
+        <div class="form-group">
+          <label>{{localize 'ADARKDEEP.items.Prof'}}</label>
+          <div class="form-fields">
+            <input
+              type="checkbox"
+              name="data.prof"
+              value="{{data.proficient}}"
+              {{checked
+              data.proficient}}
+              data-dtype="Number"
+              />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>{{localize 'ADARKDEEP.items.InHand'}}</label>
+          <div class="form-fields">
+            <input
+              type="checkbox"
+              name="data.inhand"
+              value="{{data.inhand}}"
+              {{checked
+              data.inhand}}
+              data-dtype="Number"
+              />
+          </div>
+        </div>
       </div>
       <div class="description weapon-editor">
         {{editor content=data.description target="data.description" button=true

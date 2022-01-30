@@ -92,11 +92,23 @@ export class OseActor extends Actor {
     if (this.data.type != "character") {
       return;
     }
-    let modified = Math.floor(
-      value + (this.data.data.details.xp.bonus * value) / 100
+	let value_1 = Math.floor (value * this.data.data.details.xp.share / 100);
+	let value_2 = Math.floor (value * this.data.data.details.xp2.share / 100);
+	let value_3 = Math.floor (value * this.data.data.details.xp3.share / 100);	
+    let modified_1 = Math.floor(
+      value_1 + (this.data.data.details.xp.bonus * value_1) / 100
     );
+    let modified_2 = Math.floor(
+      value_2 + (this.data.data.details.xp2.bonus * value_2) / 100
+    );
+    let modified_3 = Math.floor(
+      value_3 + (this.data.data.details.xp3.bonus * value_3) / 100
+    );
+	let modified = modified_1 + modified_2 + modified_3;
     return this.update({
-      "data.details.xp.value": modified + this.data.data.details.xp.value,
+      "data.details.xp.value": modified_1 + this.data.data.details.xp.value,
+	  "data.details.xp2.value": modified_2 + this.data.data.details.xp2.value,
+	  "data.details.xp3.value": modified_3 + this.data.data.details.xp3.value,
     }).then(() => {
       const speaker = ChatMessage.getSpeaker({ actor: this });
       ChatMessage.create({
@@ -516,7 +528,7 @@ export class OseActor extends Actor {
 
     // Add Str to damage
     if (attData.roll.type == "melee") {
-      dmgParts.push(data.scores.str.mod);
+      dmgParts.push(data.scores.str.dmg);
     }
 
     // Damage roll
@@ -549,12 +561,14 @@ export class OseActor extends Actor {
     const data = this.data.data;
     const rollParts = ["1d20"];
     const dmgParts = [];
+	let descri = "";
     let label = game.i18n.format("ADARKDEEP.roll.attacks", {
       name: this.data.name,
     });
     if (!attData.item) {
       dmgParts.push("1d6");
     } else {
+	  descri = attData.item.data.description;
       label = game.i18n.format("ADARKDEEP.roll.attacksWith", {
         name: attData.item.name,
       });
@@ -566,14 +580,18 @@ export class OseActor extends Actor {
     if (ascending) {
       rollParts.push(data.thac0.bba.toString());
     }
+	if (attData.item && !attData.item.data.proficient) {
+	  rollParts.push(data.details.nonprofpenalty.toString()
+	  );
+	}
     if (options.type == "missile") {
       rollParts.push(
-        data.scores.dex.mod.toString(),
+        data.scores.dex.missile.toString(),
         data.thac0.mod.missile.toString()
       );
     } else if (options.type == "melee") {
       rollParts.push(
-        data.scores.str.mod.toString(),
+        data.scores.str.tohit.toString(),
         data.thac0.mod.melee.toString()
       );
     }
@@ -583,7 +601,7 @@ export class OseActor extends Actor {
     let thac0 = data.thac0.value;
 	let hitbase = data.achitby20.value;
     if (options.type == "melee") {
-      dmgParts.push(data.scores.str.mod);
+      dmgParts.push(data.scores.str.dmg);
     }
     const rollData = {
       actor: this.data,
@@ -595,7 +613,7 @@ export class OseActor extends Actor {
         dmg: dmgParts,
         save: attData.roll.save,
         target: attData.roll.target,
-		description: attData.item.data.description,
+		description: descri,
       },
     };
 

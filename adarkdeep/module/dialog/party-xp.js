@@ -57,7 +57,7 @@ export class OsePartyXP extends FormApplication {
         const html = $(this.form);
         const value = parseFloat(toDeal) / actors.length;
         actors.forEach(a => {
-            html.find(`li[data-actor-id='${a.id}'] input`).val(Math.floor(a.data.data.details.xp.share / 100 * value));
+            html.find(`li[data-actor-id='${a.id}'] input`).val(Math.floor((a.data.data.details.xp.share + a.data.data.details.xp2.share + a.data.data.details.xp3.share) / 100 * value));
         })
     }
 
