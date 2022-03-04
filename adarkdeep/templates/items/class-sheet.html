@@ -1,0 +1,57 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img class="profile-img" src="{{img}}" data-edit="img" title="{{name}}" />
+    <div class="header-col">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{name}}" placeholder="Name" />
+      </h1>
+    </div>
+  </header>
+  <section class="sheet-body">
+    <div class="flexrow">
+      <div class="stats">
+        <div class="form-group block-input">
+          <label>Tags</label>
+          <div class="form-fields">
+            <input type="text" name="data.tags" value="{{data.tags}}" data-dtype="String" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Non-Prof. Penalty</label>
+          <div class="form-fields">
+            <input type="text" name="data.nonprof" value="{{data.nonprof}}" data-dtype="Number" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Saving Throw Table</label>
+          <div class="form-fields">
+            <select name="data.savingthrowtable">
+              {{#select data.savingthrowtable}}
+              {{#each config.saveas as |t a|}}
+              <option value="{{a}}">{{t}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Exc. Strength?</label>
+          <div class="form-fields">
+            <input type="checkbox" name="data.exceptstr" value="{{data.exceptstr}}" {{checked data.exceptstr}}  data-dtype="Number"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Limit Con HP?</label>
+          <div class="form-fields">
+            <input type="checkbox" name="data.conltd" value="{{data.conltd}}" {{checked data.conltd}}  data-dtype="Number"/>
+          </div>
+        </div>
+      </div>
+      <div class="description">
+        {{editor content=data.description target="data.description" button=true
+        owner=owner editable=editable}}
+      </div>
+    </div>
+  </section>
+  	  {{#if data.cr}}<section><span style="color:gray;font-size:smaller">{{data.cr_msg}}</span></section>{{/if}}
+</form>

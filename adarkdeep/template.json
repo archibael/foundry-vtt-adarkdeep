@@ -183,6 +183,9 @@
         "level": 1,
 		"level2" : null,
 		"level3" : null,
+		"savetable" : "monster",
+		"savetable2" : "monster",
+		"savetable3" : "monster",
         "xp": {
           "share": 100,
           "next": 2000,
@@ -275,7 +278,7 @@
     }
   },
   "Item": {
-    "types": ["item", "weapon", "armor", "spell", "ability", "container","skill"],
+    "types": ["item", "weapon", "armor", "spell", "ability", "container","skill","race","class"],
     "templates": {
       "common": {
 		  "cr" : false,
@@ -312,6 +315,11 @@
       "pattern": "transparent",
       "description": "",
       "damage": "1d6",
+	  "damagelarge" : "1d6",
+	  "speed": 0,
+	  "space": "",
+	  "length": "",
+	  "rateoffire": "",
       "bonus": 0,
       "tags": [],
       "slow": false,
@@ -319,9 +327,21 @@
       "melee": true,
       "cost": 0,
       "equipped": false,
-	  "proficient" : true,
+	  "proficient" : false,
 	  "inhand" : false,
+	  "addstrdmg": false,
       "weight": 0,
+	  "acmod": {
+		  "noarmor": 0,
+		  "shield": 0,
+		  "fursleather": 0,
+		  "ringbriglam": 0,
+		  "scalecuirass": 0,
+		  "mail": 0,
+		  "platemail": 0,
+		  "platearmor": 0,
+		  "joust": 0
+	  },
       "counter": {
         "value": 0,
         "max": 0
@@ -331,6 +351,7 @@
     "armor": {
       "templates": ["common"],
       "description": "",
+	  "type": "noarmor",
       "ac": 10,
       "move_mod": "1.00",
       "cost": 0,
@@ -363,6 +384,20 @@
       "blindroll": false,
       "description": "",
       "save": ""
+    },
+	"class": {
+      "templates": ["common"],
+      "pattern": "white",
+	  "tags": "",
+	  "savingthrowtable":"",
+	  "nonprof":0,
+	  "exceptstr":false,
+	  "conltd":true
+    },
+    "race": {
+      "templates": ["common"],
+      "pattern": "white",
+	  "tags": ""
     },
     "skill": {
       "templates": ["common"],

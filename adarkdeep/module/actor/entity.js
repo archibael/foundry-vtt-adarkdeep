@@ -9,6 +9,7 @@ export class OseActor extends Actor {
   prepareData() {
     super.prepareData();
     const data = this.data.data;
+	let savetype = "character";
 
     // Compute modifiers from actor scores
     this.computeModifiers();
@@ -17,6 +18,9 @@ export class OseActor extends Actor {
     this.computeEncumbrance();
     this.computeTreasure();
 	this.computeExperienceReward();
+	if (data.details.savetable) {
+		this.generateSave(0,savetype);
+	};
 
     // Determine Initiative
     if (game.settings.get("adarkdeep", "initiative") != "group") {
@@ -138,42 +142,99 @@ export class OseActor extends Actor {
     }
   }
 
-  generateSave(hd) {
+  generateSave(hd,type) {
     let saves = {};
-    for (let i = 0; i <= hd; i++) {
-      let tmp = CONFIG.ADARKDEEP.monster_saves[i];
-      if (tmp) {
-        saves = tmp;
-      }
-    }
-    // Compute Thac0
-    let thac0 = 20;
-    Object.keys(CONFIG.ADARKDEEP.monster_thac0).forEach((k) => {
-      if (parseInt(hd) < parseInt(k)) {
-        return;
-      }
-      thac0 = CONFIG.ADARKDEEP.monster_thac0[k];
-    });
-    this.update({
-      "data.thac0.value": thac0,
-      "data.saves": {
-        death: {
-          value: saves.d,
-        },
-        wand: {
-          value: saves.w,
-        },
-        paralysis: {
-          value: saves.p,
-        },
-        breath: {
-          value: saves.b,
-        },
-        spell: {
-          value: saves.s,
-        },
-      },
-    });
+	let table = {};
+	let arraytable = {};
+	let asaves = {};
+	let savearray = [];
+	if (type == "monster") {
+		table = CONFIG.ADARKDEEP.monster_saves;
+		    for (let i = 0; i <= hd; i++) {
+				let tmp = table[i];
+				if (tmp) {
+					saves = tmp;
+				}
+			}
+	} else {
+		let hdarr = [parseInt(this.data.data.details.level)? parseInt(this.data.data.details.level):0,parseInt(this.data.data.details.level2)? parseInt(this.data.data.details.level2): 0,parseInt(this.data.data.details.level3)? parseInt(this.data.data.details.level3): 0];
+		let alltables = [this.data.data.details.savetable,this.data.data.details.savetable2,this.data.data.details.savetable3];
+		savearray = alltables.map( (tabe,idx) => {
+			switch (tabe) {
+				case 'fighter':
+					arraytable = CONFIG.ADARKDEEP.fighter_saves;
+					break;
+				case 'bard':
+					arraytable = CONFIG.ADARKDEEP.bard_saves;
+					break;
+				case 'cleric':
+					arraytable = CONFIG.ADARKDEEP.cleric_saves;
+					break;
+				case 'mage':
+					arraytable = CONFIG.ADARKDEEP.mage_saves;
+					break;
+				case 'thief':
+					arraytable = CONFIG.ADARKDEEP.thief_saves;
+					break;
+				case 'monster':
+				default:
+					arraytable = CONFIG.ADARKDEEP.monster_saves;
+			};
+			for (let i = 0; i <= hdarr[idx]; i++) {
+				let atmp = arraytable[i];
+				if (atmp) {
+					asaves = atmp;
+				}
+			}
+			return asaves;
+		});
+			const pointsd = [savearray[0].d, savearray[1].d,savearray[2].d];
+			// Sort the numbers in ascending order
+			pointsd.sort(function(a, b){return a-b});
+			saves.d = pointsd[0];
+			const pointsw = [savearray[0].w, savearray[1].w,savearray[2].w];
+			// Sort the numbers in ascending order
+			pointsw.sort(function(a, b){return a-b});
+			saves.w = pointsw[0];
+			const pointsp = [savearray[0].p, savearray[1].p,savearray[2].p];
+			// Sort the numbers in ascending order
+			pointsp.sort(function(a, b){return a-b});
+			saves.p = pointsp[0];
+			const pointsb = [savearray[0].b, savearray[1].b,savearray[2].b];
+			// Sort the numbers in ascending order
+			pointsb.sort(function(a, b){return a-b});
+			saves.b = pointsb[0];
+			const pointss = [savearray[0].s, savearray[1].s,savearray[2].s];
+			// Sort the numbers in ascending order
+			pointss.sort(function(a, b){return a-b});
+			saves.s = pointss[0];
+	};
+    return this.update({
+      "data.saves.death.value": saves.d,
+      "data.saves.wand.value": saves.w,
+      "data.saves.paralysis.value": saves.p,
+      "data.saves.breath.value": saves.b,
+      "data.saves.spell.value": saves.s
+	  });
+//	      this.update({
+//     "data.saves": {
+//        death: {
+//          value: saves.d,
+//        },
+//        wand: {
+//          value: saves.w,
+//        },
+//        paralysis: {
+//          value: saves.p,
+//        },
+//        breath: {
+//          value: saves.b,
+//        },
+//        spell: {
+//          value: saves.s,
+//        },
+//      },
+//    });
   }
 
   /* -------------------------------------------- */

@@ -134,7 +134,8 @@ export class OseActorSheetMonster extends OseActorSheet {
           icon: '<i class="fas fa-check"></i>',
           callback: (html) => {
             let hd = html.find('input[name="hd"]').val();
-            this.actor.generateSave(hd);
+			let type = "monster";
+            this.actor.generateSave(hd,type);
           },
         },
         cancel: {
@@ -166,6 +167,65 @@ export class OseActorSheetMonster extends OseActorSheet {
       link = `@RollTable[${data.id}]`;
     }
     this.actor.update({ "data.details.treasure.table": link });
+  }
+
+
+  async _onDropItem(event, data) {
+	super._onDropItem(event, data);
+    if ( !this.actor.isOwner ) return false;
+	const item = await Item.implementation.fromDropData(data);
+	if (!(item.data.type == "race" || item.data.type == "class")) {
+		const itemData = item.toObject();
+    // Handle item sorting within the same Actor
+		if ( await this._isFromSameActor(data) ) return this._onSortItem(event, itemData);
+    // Create the owned item
+		return this._onDropItemCreate(itemData);
+	};
+	if (item.data.type == "race" || item.data.type == "class") {
+		if (this.actor.data.type == "character" && item.data.type == "class") {
+			if (this.actor.data.details.nonprofpenalty < item.data.details.nonprof) {
+				this.actor.data.details.nonprofpenalty = item.data.details.nonprof;
+			}
+			if (!this.actor.data.details.class) {
+				this.actor.data.details.class = item.data.name;
+				this.actor.data.details.savetable = item.data.details.savingthrowtable;
+				this.actor.data.scores.str.exenabled = item.data.details.exceptstr;
+				this.actor.data.scores.con.limited = item.data.details.conltd;
+			} else if (!this.actor.data.details.class2) {
+				this.actor.data.details.class2 = item.data.name;
+				this.actor.data.details.savetable2 = item.data.details.savingthrowtable;
+				if(!this.actor.data.scores.str.exenabled && !this.actor.data.details.dualclass) {
+					this.actor.data.scores.str.exenabled = item.data.details.exceptstr;
+				};
+				if(this.actor.data.scores.con.limited && !this.actor.data.details.dualclass) {
+					this.actor.data.scores.con.limited = item.data.details.conltd;
+				};
+			} else if (!this.actor.data.details.class3) {
+				this.actor.data.details.class3 = item.data.name;
+				this.actor.data.details.savetable3 = item.data.details.savingthrowtable;
+				if(!this.actor.data.scores.str.exenabled) {
+					this.actor.data.scores.str.exenabled = item.data.details.exceptstr;
+				};
+				if(this.actor.data.scores.con.limited) {
+					this.actor.data.scores.con.limited = item.data.details.conltd;
+				};
+			}
+		};
+		if (this.actor.data.type == "character" && item.data.type == "race") {
+			this.actor.data.details.race = item.data.name;
+		};
+		let tags = item.data.data.tags.split(',');
+		let eData = {};
+		let indexfields = {fields: ['name','img','type','data.requirements']};
+		game.packs.get('adarkdeep.Racial Abilities').getIndex(indexfields);
+		const raceAbilityArray = game.collections.get('Item').filter(el=> tags.some( (element) => el.data.data.requirements?.split(',').includes(element) ?? false  ));
+		raceAbilityArray.forEach(e => {
+			eData = e.toObject(); 
+//			if ( await this._isFromSameActor(data) ) return this._onSortItem(event, eData);
+			return this._onDropItemCreate(eData);
+		});
+	};
+ 	
   }
 
   /* -------------------------------------------- */

@@ -90,7 +90,7 @@
 /* tab padding fix */
 .adarkdeep.sheet nav{
   padding: 0;
-}
+} 
 .adarkdeep.sheet.actor .sheet-tabs {
   position: absolute;
   transform: rotate(90deg);

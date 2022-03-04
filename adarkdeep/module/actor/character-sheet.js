@@ -120,6 +120,60 @@ export class OseActorSheetCharacter extends OseActorSheet {
     return data;
   }
 
+ async _onDropItem(event, data) {
+	super._onDropItem(event, data);
+    if ( !this.actor.isOwner ) return false;
+	const item = await Item.implementation.fromDropData(data);
+	if (!(item.data.type == "race" || item.data.type == "class")) {
+		const itemData = item.toObject();
+    // Handle item sorting within the same Actor
+		if ( await this._isFromSameActor(data) ) return this._onSortItem(event, itemData);
+    // Create the owned item
+		return this._onDropItemCreate(itemData);
+	};
+	if (item.data.type == "race" || item.data.type == "class") {
+		if (this.actor.data.type == "character" && item.data.type == "class") {
+			if (this.actor.data.data.details.nonprofpenalty > item.data.data.nonprof) {
+				this.actor.data.data.details.nonprofpenalty = item.data.data.nonprof;
+			}
+			if (!this.actor.data.data.details.class) {
+				this.actor.update({data: {details: {class: item.data.name, savetable:item.data.data.savingthrowtable}}});
+				this.actor.update({data: {scores: {con: {limited:item.data.data.conltd}}}});
+                this.actor.update({data: {scores:{str:{exenabled:item.data.data.exceptstr}}}});				
+			} else if (!this.actor.data.data.details.class2) {
+				this.actor.update({data: {details: {class2: item.data.name, savetable2:item.data.data.savingthrowtable}}});
+				if(!this.actor.data.data.scores.str.exenabled && !this.actor.data.data.details.dualclass) {
+	                this.actor.update({data: {scores:{str:{exenabled:item.data.data.exceptstr}}}});	
+				};
+				if(this.actor.data.data.scores.con.limited && !this.actor.data.data.details.dualclass) {
+				this.actor.update({data: {scores: {con: {limited:item.data.data.conltd}}}});
+				};
+			} else if (!this.actor.data.data.details.class3) {
+				this.actor.update({data: {details: {class3: item.data.name, savetable3:item.data.data.savingthrowtable}}});
+				if(!this.actor.data.data.scores.str.exenabled) {
+	                this.actor.update({data: {scores:{str:{exenabled:item.data.data.exceptstr}}}});	
+				};
+				if(this.actor.data.data.scores.con.limited) {
+				this.actor.update({data: {scores: {con: {limited:item.data.data.conltd}}}});
+				};
+			}
+		};
+		if (this.actor.data.type == "character" && item.data.type == "race") {
+			this.actor.update({data: {details: {race: item.data.name}}});
+		};
+		let tags = item.data.data.tags.split(',');
+		let eData = {};
+		let indexfields = {fields: ['name','img','type','data.requirements']};
+		game.packs.get('adarkdeep.Racial Abilities').getIndex(indexfields);
+		const raceAbilityArray = game.collections.get('Item').filter(el=> tags.some( (element) => el.data.data.requirements?.split(',').includes(element) ?? false  ));
+		raceAbilityArray.forEach(e => {
+			eData = e.toObject(); 
+//			if ( await this._isFromSameActor(data) ) return this._onSortItem(event, eData);
+			return this._onDropItemCreate(eData);
+		});
+	};
+ 	
+  }
 
   async _chooseLang() {
     let choices = CONFIG.ADARKDEEP.languages;

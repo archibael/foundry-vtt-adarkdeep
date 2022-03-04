@@ -13,6 +13,8 @@ export class OseItem extends Item {
       armor: "systems/adarkdeep/assets/default/armor.png",
       weapon: "systems/adarkdeep/assets/default/weapon.png",
       item: "systems/adarkdeep/assets/default/item.png",
+      race: "systems/adarkdeep/assets/default/item.png",
+      class: "systems/adarkdeep/assets/default/item.png",
       container: "systems/adarkdeep/assets/default/bag.png"
     };
   }
@@ -181,6 +183,7 @@ export class OseItem extends Item {
 	let roll = "";
     switch (this.data.type) {
       case "container":
+	  case "race":
         return [];
       case "weapon":
         tagList.push({label: data.damage, icon: "fa-tint"});
